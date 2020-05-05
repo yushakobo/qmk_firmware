@@ -425,6 +425,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         #ifdef AUDIO_ENABLE
           PLAY_SONG(ag_norm_song);
         #endif
+        eeconfig_update_keymap(keymap_config.raw);
       }
       break;
     case WIN:
@@ -434,6 +435,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         #ifdef AUDIO_ENABLE
           PLAY_SONG(ag_swap_song);
         #endif
+        eeconfig_update_keymap(keymap_config.raw);
       }
       break;
     }
