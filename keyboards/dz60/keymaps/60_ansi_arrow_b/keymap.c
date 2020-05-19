@@ -48,39 +48,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______
       ),
 };
-
-static bool A_pressed = false;
-static bool D_pressed = false;
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-	case KC_A:
-		if (record->event.pressed) {
-			A_pressed = true;
-			if(D_pressed){
-				unregister_code(KC_D);
-				return false;
-			}
-		}else{
-			A_pressed = false;
-			if(D_pressed){
-				register_code(KC_D);
-			}
-		}
-	break;
-	case KC_D:
-		if (record->event.pressed) {
-			D_pressed = true;
-			if(A_pressed){
-				unregister_code(KC_A);
-				return false;
-			}
-		}else{
-			D_pressed = false;
-			if(A_pressed){
-				register_code(KC_A);
-			}
-		}
-	break;
-  }
-  return true;
-}
