@@ -22,7 +22,11 @@ define ZINC_CUSTOMISE_MSG
   $(info -  LED_UNDERGLOW_ENABLE=$(LED_UNDERGLOW_ENABLE))
   $(info -  LED_BOTH_ENABLE=$(LED_BOTH_ENABLE))
   $(info -  LED_RGB_CONT=$(LED_RGB_CONT))
+<<<<<<< HEAD
   $(info -  RGB_MATGRIX=$(RGB_MATRIX))
+=======
+  $(info -  RGB_MATRIX=$(RGB_MATRIX))
+>>>>>>> master
   $(info -  LED_ANIMATION=$(LED_ANIMATIONS))
   $(info -  IOS_DEVICE_ENABLE=$(IOS_DEVICE_ENABLE))
 endef
