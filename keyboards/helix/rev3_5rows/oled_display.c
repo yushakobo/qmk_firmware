@@ -16,15 +16,9 @@
  
 #include QMK_KEYBOARD_H
 
-// Defines names for use in layer keycodes and the keymap
-enum layer_names {
-  _QWERTY = 0,
-  _LOWER,
-  _RAISE,
-  _ADJUST
-};
-
 #ifdef OLED_DRIVER_ENABLE
+
+extern const char * PROGMEM get_layer_name(uint8_t layernum);
 
 void render_status(void) {
 
@@ -45,23 +39,7 @@ void render_status(void) {
   // Host Keyboard Layer Status
   oled_write_P(PSTR("Layer: "), false);
 
-  switch (get_highest_layer(layer_state)) {
-      case _QWERTY:
-          oled_write_P(PSTR("Default\n"), false);
-          break;
-      case _RAISE:
-          oled_write_P(PSTR("Raise\n"), false);
-          break;
-      case _LOWER:
-          oled_write_P(PSTR("Lower\n"), false);
-          break;
-      case _ADJUST:
-          oled_write_P(PSTR("Adjust\n"), false);
-          break;
-      default:
-          // Or use the write_ln shortcut over adding '\n' to the end of your string
-          oled_write_ln_P(PSTR("Undefined"), false);
-  }
+  oled_write_P(get_layer_name(get_highest_layer(layer_state)), false);
 
   oled_write_P(PSTR("\n"), false);
 
