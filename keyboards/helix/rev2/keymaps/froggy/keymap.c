@@ -20,16 +20,6 @@ extern rgblight_config_t rgblight_config;
 
 extern uint8_t is_master;
 
-#define DELAY_TIME  75
-static uint16_t key_timer;
-static uint16_t tap_timer;
-static uint16_t delay_registered_code;
-static uint8_t delay_mat_row;
-static uint8_t delay_mat_col;
-static bool delay_key_stat;
-static bool delay_key_pressed;
-static bool tapping_key;
-
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
@@ -196,6 +186,20 @@ void persistent_default_layer_set(uint16_t default_layer) {
   default_layer_set(default_layer);
 }
 
+
+// 遅延入力処理用定数と変数
+// レイヤーキーとの同時打鍵を実現するために一時的な入力内容を静的変数に保持する
+// DELAY_TIME以内であればレイヤーキーの押下が後でも反映される
+#define DELAY_TIME  75 // 遅延入力有効時間 (ms)
+static uint16_t key_timer; // 遅延入力用タイマー
+static uint16_t tap_timer; // タップ用タイマー
+static uint16_t delay_registered_code; // 遅延入力されたキーコード
+static uint8_t delay_mat_row; // 遅延入力された行
+static uint8_t delay_mat_col; // 遅延入力された列
+static bool delay_key_stat; // 遅延入力キーがあるときにtrue
+static bool delay_key_pressing; // 延入力キーが押されている間はtrue
+static bool tapping_key;
+
 bool find_mairix(uint16_t keycode, uint8_t *row, uint8_t *col){
   for(uint8_t i=0; i<MATRIX_ROWS; i++){
     for(uint8_t j=0; j<MATRIX_COLS; j++){
@@ -313,13 +317,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_SPC:
       if (record->event.pressed) {
         register_delay_code(_BASE);
+        unregister_delay_code();
         if(find_mairix(keycode, &delay_mat_row, &delay_mat_col)){
           key_timer = timer_read();
           delay_key_stat = true;
-          delay_key_pressed = true;
+          delay_key_pressing = true;
         }
       }else{
-        delay_key_pressed = false;
+        delay_key_pressing = false;
       }
       return false;
       break;
@@ -327,6 +332,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         tapping_key = false;
         register_delay_code(_OPT);
+        unregister_delay_code();
         layer_on(_OPT);
         tap_timer = timer_read();
       }else{
@@ -425,6 +431,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         #ifdef AUDIO_ENABLE
           PLAY_SONG(ag_norm_song);
         #endif
+        eeconfig_update_keymap(keymap_config.raw);
       }
       break;
     case WIN:
@@ -434,6 +441,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         #ifdef AUDIO_ENABLE
           PLAY_SONG(ag_swap_song);
         #endif
+        eeconfig_update_keymap(keymap_config.raw);
       }
       break;
     }
@@ -560,7 +568,7 @@ void matrix_scan_user(void) {
 
   if(delay_key_stat && (timer_elapsed(key_timer) > DELAY_TIME)){
     register_delay_code(_BASE);
-    if(!delay_key_pressed){
+    if(!delay_key_pressing){
       unregister_delay_code();
     }
   }
@@ -571,15 +579,19 @@ void matrix_scan_user(void) {
         break;
       case L_OPT:
         register_delay_code(_OPT);
+        unregister_delay_code();
         break;
       case L_NUM:
         register_delay_code(_NUM);
+        unregister_delay_code();
         break;
       case L_SYM:
         register_delay_code(_SYM);
+        unregister_delay_code();
         break;
       case L_FUNC:
         register_delay_code(_FUNC);
+        unregister_delay_code();
         break;
     }
     layer_state_old = layer_state;
