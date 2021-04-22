@@ -64,6 +64,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_LNG2);
             }
             break;
+        case KC_LANG:
+            if (record->event.pressed){
+
+            }
         default:
             break;
     }
