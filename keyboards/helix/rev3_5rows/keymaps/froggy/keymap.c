@@ -407,16 +407,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case MAC:
       if (record->event.pressed) {
-        keymap_config.swap_lalt_lgui = false;
-        keymap_config.swap_ralt_rgui = false;
-        eeconfig_update_keymap(keymap_config.raw);
+        set_mac_mode(true);
       }
       break;
     case WIN:
       if (record->event.pressed) {
-        keymap_config.swap_lalt_lgui = true;
-        keymap_config.swap_ralt_rgui = true;
-        eeconfig_update_keymap(keymap_config.raw);
+        set_mac_mode(false);
       }
       break;
     }
