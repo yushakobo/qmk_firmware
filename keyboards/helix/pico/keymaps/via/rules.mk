@@ -23,3 +23,4 @@ LTO_ENABLE = no  # if firmware size over limit, try this option
 #   into QMK standard options.
 include $(strip $(KEYBOARD_LOCAL_FEATURES_MK))
 VIA_ENABLE = yes
+RGBLIGHT_ENABLE = yes
