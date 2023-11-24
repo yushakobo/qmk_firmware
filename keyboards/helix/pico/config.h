@@ -24,24 +24,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SERIAL_SLAVE_BUFFER_LENGTH  ((MATRIX_ROWS)/2)
 #define SERIAL_MASTER_BUFFER_LENGTH ((MATRIX_ROWS)/2)
 
-/* Select hand configuration */
-#define MASTER_LEFT
-// #define MASTER_RIGHT
-// #define EE_HANDS
-
-/* key matrix size */
-// Rows are doubled-up
-#define MATRIX_ROWS 8
-#define MATRIX_ROW_PINS { D4, C6, D7, E6 }
-
-// wiring of each half
-#define MATRIX_COLS 7
-#define MATRIX_COL_PINS { F4, F5, F6, F7, B1, B3, B2 }
-// #define MATRIX_COL_PINS { B2, B3, B1, F7, F6, F5, F4 } //uncomment this line and comment line above if you need to reverse left-to-right key order
-
-/* COL2ROW, ROW2COL*/
-#define DIODE_DIRECTION COL2ROW
-
 /* Audio */
 #ifdef AUDIO_ENABLE
   #define AUDIO_PIN B5
