@@ -20,9 +20,9 @@
             "breathing": true,
             "rainbow_mood": true,
             "rainbow_swirl": true,
-            "snake": true,
-            "knight": true,
-            "christmas": true,
+            "snake": false,
+            "knight": false,
+            "christmas": false,
             "static_gradient": true
         }
     },
