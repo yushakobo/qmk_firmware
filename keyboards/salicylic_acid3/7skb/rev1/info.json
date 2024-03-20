@@ -4,8 +4,8 @@
     "url": "https://salicylic-acid3.hatenablog.com/",
     "maintainer": "Salicylic_acid3",
     "usb": {
-        "vid": "0x04D8",
-        "pid": "0xEB5F",
+        "vid": "0x3265",
+        "pid": "0x000A",
         "device_version": "0.0.7"
     },
     "matrix_pins": {
