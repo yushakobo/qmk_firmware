@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 _qmk_install_prepare() {
     echo "This script will make a USE change in order to ensure that that QMK works on your system."
@@ -19,7 +19,7 @@ _qmk_install() {
 
     sudo touch /etc/portage/package.use/qmkfirmware
     # tee is used here since sudo doesn't apply to >>
-    echo "sys-devel/gcc multilib" | sudo tee --append /etc/portage/package.use/qmkfirmware >/dev/null
+    echo "sys-devel/gcc multilib\ncross-arm-none-eabi/newlib nano" | sudo tee --append /etc/portage/package.use/qmkfirmware >/dev/null
     sudo emerge -auN sys-devel/gcc
     sudo emerge -au --noreplace \
         app-arch/unzip app-arch/zip net-misc/wget sys-devel/clang \

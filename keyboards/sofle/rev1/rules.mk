@@ -1,2 +1,1 @@
-ENCODER_ENABLE = yes
-OLED_DRIVER_ENABLE = yes
+# This file intentionally left blank

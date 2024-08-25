@@ -16,7 +16,7 @@
 一部のキーボードでは、ブートマジックはデフォルトで無効になっています。その場合、`rules.mk` 内で以下のように明示的に有効にする必要があります:
 
 ```make
-BOOTMAGIC_ENABLE = full
+BOOTMAGIC_ENABLE = yes
 ```
 
 ?> `full` の代わりに `yes` が使われていることがあるかもしれませんが、これは問題ありません。ただし、`yes` は非推奨で、理想的には `full` (あるいは`lite`) が使われるべきです。
@@ -139,8 +139,8 @@ BOOTMAGIC_ENABLE = lite
 さらに、どのキーを使うかを指定したほうが良いかもしれません。これは普通ではないマトリックスを持つキーボードで特に便利です。そのためには、使いたいキーの行と列を指定する必要があります。`config.h` ファイルにこれらのエントリを追加します:
 
 ```c
-#define BOOTMAGIC_LITE_ROW 0
-#define BOOTMAGIC_LITE_COLUMN 1
+#define BOOTMAGIC_ROW 0
+#define BOOTMAGIC_COLUMN 1
 ```
 
 デフォルトでは、これらは 0 と 0 に設定されます。これは通常はほとんどのキーボードで "ESC" キーです。
@@ -154,8 +154,8 @@ BOOTMAGIC_ENABLE = lite
 `SPLIT_HAND_PIN` のようなオプションで、左右の設定があらかじめ決められている場合は、キーボードの左右で別のキーを設定する必要があるかもしれません。これを行うには、`config.h` ファイルに以下のエントリを追加します。
 
 ```c
-#define BOOTMAGIC_LITE_ROW_RIGHT 4
-#define BOOTMAGIC_LITE_COLUMN_RIGHT 1
+#define BOOTMAGIC_ROW_RIGHT 4
+#define BOOTMAGIC_COLUMN_RIGHT 1
 ```
 
 デフォルトでは、これらの値は設定されていません。
@@ -172,7 +172,7 @@ void bootmagic_lite(void) {
     wait_ms(DEBOUNCE * 2);
     matrix_scan();
 
-    if (matrix_get_row(BOOTMAGIC_LITE_ROW) & (1 << BOOTMAGIC_LITE_COLUMN)) {
+    if (matrix_get_row(BOOTMAGIC_ROW) & (1 << BOOTMAGIC_COLUMN)) {
       // ブートローダにジャンプする。
       bootloader_jump();
     }
