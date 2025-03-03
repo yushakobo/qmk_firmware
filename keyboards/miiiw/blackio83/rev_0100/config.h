@@ -16,9 +16,6 @@
 
 #pragma once
 
-// EEPROM i2c chip
-#define EEPROM_I2C_24LC256
-
 #define POWER_SWITCH_PIN B0
 
 /* 16 with dummy columns for shift registers */

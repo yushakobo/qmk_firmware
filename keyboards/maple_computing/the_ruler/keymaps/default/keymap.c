@@ -9,6 +9,12 @@
 #define _FN_1 1
 #define _FN_2 2
 
+enum custom_keycodes {
+  DEFAULT = SAFE_RANGE,
+  FN_1,
+  FN_2
+};
+
 // Defines for task manager and such
 #define CALTDEL LCTL(LALT(KC_DEL))
 #define TSKMGR LCTL(LSFT(KC_ESC))
@@ -26,20 +32,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* FN 1 Layer
  * ,-----------------------------------------------.
- * |UG_TOGG|UG_HUED|UG_HUEU|UG_SATD|UG_SATU|  FN_1 |
+ * |RGB_TOG|RGB_HUD|RGB_HUI|RGB_SAD|RGB_SAI|  FN_1 |
  * `-----------------------------------------------'
  */
 [_FN_1] = LAYOUT(
-  UG_TOGG, UG_HUED, UG_HUEU, UG_SATD, UG_SATU, _______
+  RGB_TOG, RGB_HUD, RGB_HUI, RGB_SAD, RGB_SAI, _______
 ),
 
 /* FN 2 Layer
  * ,-----------------------------------------------.
- * |  FN_2 |UG_VALD|UG_VALU|UG_NEXT|TSKMGR | QK_BOOT |
+ * |  FN_2 |RGB_VAD|RGB_VAI|RGB_MOD|TSKMGR | QK_BOOT |
  * `-----------------------------------------------'
  */
 [_FN_2] = LAYOUT(
-  _______, UG_VALD, UG_VALU, UG_NEXT, TSKMGR, QK_BOOT
+  _______, RGB_VAD, RGB_VAI, RGB_MOD, TSKMGR, QK_BOOT
 )
 
 };
+
+void persistant_default_layer_set(uint16_t default_layer) {
+  eeconfig_update_default_layer(default_layer);
+  default_layer_set(default_layer);
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    // NONE
+  }
+  return true;
+}

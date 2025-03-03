@@ -16,19 +16,32 @@
 
 #include "quantum.h"
 
-void keyboard_pre_init_kb(void) {
-    gpio_set_pin_output(D1);
+void keyboard_pre_init_user(void) {
+  // Call the keyboard pre init code.
+  // Set our LED pins as output
+  setPinOutput(D5);
+  setPinOutput(D3);
+  setPinOutput(D2);
+  setPinOutput(D1);
+}
 
-    keyboard_pre_init_user();
+bool led_update_kb(led_t led_state) {
+    bool res = led_update_user(led_state);
+    if(res) {
+        writePin(D5, led_state.num_lock);
+        writePin(D3, led_state.caps_lock);
+        writePin(D2, led_state.scroll_lock);
+    }
+    return res;
 }
 
 layer_state_t layer_state_set_kb(layer_state_t state) {
     switch (get_highest_layer(state)) {
       case 1:
-        gpio_write_pin_high(D1);
+        writePinHigh(D1);
         break;
       default: //  for any other layers, or the default layer
-        gpio_write_pin_low(D1);
+        writePinLow(D1);
         break;
       }
     return layer_state_set_user(state);

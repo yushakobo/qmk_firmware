@@ -24,6 +24,8 @@
         "led_flush_limit": 100,
         "sleep": true
     },
-    "development_board": "blackpill_f411",
+    "processor": "STM32F411",
+    "bootloader": "stm32-dfu",
+    "board": "BLACKPILL_STM32_F411",
     "debounce": 0
 }

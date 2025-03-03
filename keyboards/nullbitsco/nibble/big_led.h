@@ -15,8 +15,7 @@
  */
 #pragma once
 
-#include <stdint.h>
-#include "gpio.h"
+#include "quantum.h"
 
 /* Optional big LED pins */
 #define BIG_LED_R_PIN D7

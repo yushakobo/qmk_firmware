@@ -196,8 +196,6 @@ enum usb_interfaces {
     TOTAL_INTERFACES
 };
 
-#define IS_VALID_INTERFACE(i) ((i) >= 0 && (i) < TOTAL_INTERFACES)
-
 #define NEXT_EPNUM __COUNTER__
 
 /*
@@ -278,6 +276,8 @@ enum usb_endpoints {
 // ChibiOS gives us number of available user endpoints, not control
 #    define MAX_ENDPOINTS USB_MAX_ENDPOINTS
 #endif
+
+// TODO - ARM_ATSAM
 
 #if (NEXT_EPNUM - 1) > MAX_ENDPOINTS
 #    error There are not enough available endpoints to support all functions. Please disable one or more of the following: Mouse Keys, Extra Keys, Console, NKRO, MIDI, Serial, Steno

@@ -33,6 +33,7 @@ void slider(void) {
 
 void housekeeping_task_kb(void) {
     slider();
+    housekeeping_task_user();
 }
 
 static uint32_t oled_logo_timer = 0;

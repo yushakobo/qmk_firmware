@@ -33,22 +33,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch(keycode) {
     case TO(HDN):
       if (record->event.pressed) {
-        gpio_write_pin_high(C6);
+        PORTC |= (1 << 6); // PC6 goes high
       }
 
       return true;
 
     case TO(OSY):
       if (record->event.pressed) {
-        gpio_write_pin_low(C6);
-        gpio_write_pin_high(D4);
+        PORTC &= ~(1 << 6); // PC6 goes high
+        PORTD |= (1<<4);
       }
 
       return true;
 
     case TO(DEF):
       if (record->event.pressed) {
-        gpio_write_pin_low(D4);
+        PORTD &= ~(1 << 4); // PC6 goes high
       }
 
       return true;

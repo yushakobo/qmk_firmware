@@ -302,7 +302,7 @@ static uint16_t scancode         = 0;
 static uint8_t  alarm_cnt        = 0;
 static uint8_t  RGB_HSV_level;
 
-hsv_t hsv;
+HSV hsv;
 
 void led_test(uint8_t color);
 void clear_eeprom(void);
@@ -414,7 +414,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
-        case QK_RGB_MATRIX_VALUE_UP:
+        case RGB_VAI:
             if ((fn_make_flag && record->event.pressed) && (alarm_flag == 0)) {
                 if ((RGB_HSV_level = (uint8_t)rgb_matrix_get_val() / (RGB_MATRIX_MAXIMUM_BRIGHTNESS / 4)) < 4) {
                     RGB_HSV_level++;
@@ -423,7 +423,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 rgb_hsv_updata_user();
             }
             return false;
-        case QK_RGB_MATRIX_VALUE_DOWN:
+        case RGB_VAD:
             if ((fn_make_flag && record->event.pressed) && (alarm_flag == 0)) {
                 if ((RGB_HSV_level = (uint8_t)rgb_matrix_get_val() / (RGB_MATRIX_MAXIMUM_BRIGHTNESS / 4)) > 0) {
                     RGB_HSV_level--;
@@ -432,7 +432,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 rgb_hsv_updata_user();
             }
             return false;
-        case QK_RGB_MATRIX_SATURATION_UP:
+        case RGB_SAI:
             if ((fn_make_flag && record->event.pressed) && (alarm_flag == 0)) {
                 if ((RGB_HSV_level = (uint8_t)rgb_matrix_get_sat() / (UINT8_MAX / 4)) < 4) {
                     RGB_HSV_level++;
@@ -441,7 +441,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 rgb_hsv_updata_user();
             }
             return false;
-        case QK_RGB_MATRIX_SATURATION_DOWN:
+        case RGB_SAD:
             if ((fn_make_flag && record->event.pressed) && (alarm_flag == 0)) {
                 if ((RGB_HSV_level = (uint8_t)rgb_matrix_get_sat() / (UINT8_MAX / 4)) > 0) {
                     RGB_HSV_level--;
@@ -450,7 +450,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 rgb_hsv_updata_user();
             }
             return false;
-        case QK_RGB_MATRIX_HUE_UP:
+        case RGB_HUI:
             if ((fn_make_flag && record->event.pressed) && (alarm_flag == 0)) {
                 if ((RGB_HSV_level = (uint8_t)rgb_matrix_get_hue() / (UINT8_MAX / 6)) < 6) {
                     RGB_HSV_level++;
@@ -459,7 +459,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 rgb_hsv_updata_user();
             }
             return false;
-        case QK_RGB_MATRIX_HUE_DOWN:
+        case RGB_HUD:
             if ((fn_make_flag && record->event.pressed) && (alarm_flag == 0)) {
                 if ((RGB_HSV_level = (uint8_t)rgb_matrix_get_hue() / (UINT8_MAX / 6)) > 0) {
                     RGB_HSV_level--;
@@ -468,7 +468,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 rgb_hsv_updata_user();
             }
             return false;
-        case QK_RGB_MATRIX_SPEED_UP:
+        case RGB_SPI:
             if ((fn_make_flag && record->event.pressed) && (alarm_flag == 0)) {
                 if ((RGB_HSV_level = (uint8_t)rgb_matrix_get_speed() / (UINT8_MAX / 4)) < 4) {
                     RGB_HSV_level++;
@@ -476,7 +476,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case QK_RGB_MATRIX_SPEED_DOWN:
+        case RGB_SPD:
             if ((fn_make_flag && record->event.pressed) && (alarm_flag == 0)) {
                 if ((RGB_HSV_level = (uint8_t)rgb_matrix_get_speed() / (UINT8_MAX / 4)) > 0) {
                     RGB_HSV_level--;
@@ -484,7 +484,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case QK_RGB_MATRIX_TOGGLE:
+        case RGB_TOG:
             if (record->event.pressed) {
                 switch (rgb_matrix_get_flags()) {
                     case LED_FLAG_ALL: {

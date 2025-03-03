@@ -38,35 +38,34 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
-#include <stdint.h>
-#include "gpio.h"
+#include "quantum.h"
 
 #define XT_DATA_IN()               \
     do {                           \
-        gpio_set_pin_input(XT_DATA_PIN);  \
-        gpio_write_pin_high(XT_DATA_PIN); \
+        setPinInput(XT_DATA_PIN);  \
+        writePinHigh(XT_DATA_PIN); \
     } while (0)
 
-#define XT_DATA_READ() gpio_read_pin(XT_DATA_PIN)
+#define XT_DATA_READ() readPin(XT_DATA_PIN)
 
 #define XT_DATA_LO()               \
     do {                           \
-        gpio_write_pin_low(XT_DATA_PIN);  \
-        gpio_set_pin_output(XT_DATA_PIN); \
+        writePinLow(XT_DATA_PIN);  \
+        setPinOutput(XT_DATA_PIN); \
     } while (0)
 
 #define XT_CLOCK_IN()               \
     do {                            \
-        gpio_set_pin_input(XT_CLOCK_PIN);  \
-        gpio_write_pin_high(XT_CLOCK_PIN); \
+        setPinInput(XT_CLOCK_PIN);  \
+        writePinHigh(XT_CLOCK_PIN); \
     } while (0)
 
-#define XT_CLOCK_READ() gpio_read_pin(XT_CLOCK_PIN)
+#define XT_CLOCK_READ() readPin(XT_CLOCK_PIN)
 
 #define XT_CLOCK_LO()               \
     do {                            \
-        gpio_write_pin_low(XT_CLOCK_PIN);  \
-        gpio_set_pin_output(XT_CLOCK_PIN); \
+        writePinLow(XT_CLOCK_PIN);  \
+        setPinOutput(XT_CLOCK_PIN); \
     } while (0)
 
 void xt_host_init(void);

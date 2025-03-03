@@ -17,3 +17,5 @@
 #pragma once
 
 #define USB_SUSPEND_WAKEUP_DELAY 5000
+
+#define VIA_EEPROM_LAYOUT_OPTIONS_SIZE 2

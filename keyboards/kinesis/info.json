@@ -1,10 +1,4 @@
 {
   "url": "",
-  "maintainer": "qmk",
-  "qmk": {
-    "locking": {
-      "enabled": true,
-      "resync": true
-    }
-  }
+  "maintainer": "qmk"
 }

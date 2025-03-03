@@ -9,7 +9,8 @@ enum layer_names {
 };
 
 enum custom_keycodes {
-  LOWER = SAFE_RANGE,
+  QWERTY = SAFE_RANGE,
+  LOWER,
   RAISE,
   ADJUST,
 };
@@ -49,16 +50,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_ADJUST] = LAYOUT(
-     TSKMGR,  _______,  _______, _______, _______, _______, _______,         _______,  _______, UG_NEXT, UG_VALU, UG_SATU, UG_HUEU, CALTDEL,
-     _______, _______,  _______, _______, _______, _______, _______,         _______,  _______, UG_PREV, UG_VALD, UG_SATD, UG_HUED, UG_TOGG,
+     TSKMGR,  _______,  _______, _______, _______, _______, _______,         _______,  _______, RGB_MOD, RGB_VAI, RGB_SAI, RGB_HUI, CALTDEL,
+     _______, _______,  _______, _______, _______, _______, _______,         _______,  _______, RGB_RMOD, RGB_VAD, RGB_SAD, RGB_HUD, RGB_TOG,
      _______, _______,  _______, _______, _______, _______, _______,         _______,  _______, _______, _______, _______, _______, BL_STEP,
      _______, _______, _______, _______,           _______, _______,         _______,  _______,          _______, _______, _______, QK_BOOT
   )
 
 };
 
+
+
+
+
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case QWERTY:
+      if (record->event.pressed) {
+        #ifdef AUDIO_ENABLE
+          PLAY_SONG(tone_qwerty);
+        #endif
+        set_single_persistent_default_layer(_QWERTY);
+      }
+      return false;
+      break;
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);

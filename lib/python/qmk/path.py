@@ -23,9 +23,8 @@ def is_keyboard(keyboard_name):
 
     keyboard_path = QMK_FIRMWARE / 'keyboards' / keyboard_name
     rules_mk = keyboard_path / 'rules.mk'
-    keyboard_json = keyboard_path / 'keyboard.json'
 
-    return rules_mk.exists() or keyboard_json.exists()
+    return rules_mk.exists()
 
 
 def under_qmk_firmware(path=Path(os.environ['ORIG_CWD'])):

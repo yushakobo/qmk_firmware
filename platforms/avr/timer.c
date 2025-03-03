@@ -25,7 +25,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // counter resolution 1ms
 // NOTE: union { uint32_t timer32; struct { uint16_t dummy; uint16_t timer16; }}
 volatile uint32_t timer_count;
-static uint32_t   saved_ms;
 
 /** \brief timer initialization
  *
@@ -76,24 +75,6 @@ void timer_init(void) {
 inline void timer_clear(void) {
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         timer_count = 0;
-    }
-}
-
-/** \brief timer save
- *
- * Set saved_ms to current time.
- */
-void timer_save(void) {
-    saved_ms = timer_read32();
-}
-
-/** \brief timer restore
- *
- * Set timer_count to saved_ms
- */
-void timer_restore(void) {
-    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-        timer_count = saved_ms;
     }
 }
 

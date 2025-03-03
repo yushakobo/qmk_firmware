@@ -35,8 +35,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_FN] = LAYOUT(
                                 KC_NO,
     KC_NO,   KC_NO,   KC_NO,    KC_NO,
-    UG_HUEU, UG_SATU, UG_VALU,
-    UG_HUED, UG_SATD, UG_VALD,  UG_TOGG,
+    RGB_HUI, RGB_SAI, RGB_VAI,
+    RGB_HUD, RGB_SAD, RGB_VAD,  RGB_TOG,
     KC_NO,   KC_NO,   KC_NO,
     KC_NO,            KC_NO,    KC_NO
     )

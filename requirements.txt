@@ -1,5 +1,5 @@
 # Python requirements
-# platformdirs
+appdirs
 argcomplete
 colorama
 dotty-dict

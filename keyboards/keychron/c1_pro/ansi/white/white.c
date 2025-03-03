@@ -128,7 +128,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
     switch (keycode) {
-        case LM_TOGG:
+        case BL_TOGG:
             if (record->event.pressed) {
                 switch (led_matrix_get_flags()) {
                     case LED_FLAG_ALL: {

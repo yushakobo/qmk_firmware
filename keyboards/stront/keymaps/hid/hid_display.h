@@ -1,8 +1,7 @@
 // Copyright 2023 zzeneg (@zzeneg)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include <stdint.h>
-#include <stdbool.h>
+#include "quantum.h"
 
 typedef enum {
     _QWERTY = 0,

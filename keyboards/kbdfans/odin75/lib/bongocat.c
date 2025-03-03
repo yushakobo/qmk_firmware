@@ -14,13 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "bongocat.h"
-#include <stdlib.h>
-#include "oled_driver.h"
-#include "progmem.h"
-#include "timer.h"
-#include "wpm.h"
-#include "util.h"
+#include "quantum.h"
 
 // WPM-responsive animation stuff here
 #define IDLE_FRAMES 5

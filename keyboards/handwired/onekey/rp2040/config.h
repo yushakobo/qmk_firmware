@@ -3,6 +3,9 @@
 
 #pragma once
 
+
+#define DEBUG_MATRIX_SCAN_RATE
+
 #define QMK_WAITING_TEST_BUSY_PIN GP8
 #define QMK_WAITING_TEST_YIELD_PIN GP9
 

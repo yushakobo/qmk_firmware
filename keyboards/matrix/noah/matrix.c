@@ -2,10 +2,16 @@
  * matrix.c
  */
 
-#include "matrix.h"
+#include <stdint.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+#include <hal.h>
+#include "quantum.h"
 #include "timer.h"
 #include "wait.h"
 #include "print.h"
+#include "matrix.h"
 
 #ifndef DEBOUNCE
 #    define DEBOUNCE 5
@@ -161,16 +167,16 @@ matrix_row_t matrix_get_row(uint8_t row) { return matrix[row]; }
 
 void matrix_print(void)
 {
-    xprintf("\nr/c 01234567\n");
+    printf("\nr/c 01234567\n");
     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
-        xprintf("%X0: ", row);
+        printf("%X0: ", row);
         matrix_row_t data = matrix_get_row(row);
         for (int col = 0; col < MATRIX_COLS; col++) {
             if (data & (1<<col))
-                xprintf("1");
+                printf("1");
             else
-                xprintf("0");
+                printf("0");
         }
-        xprintf("\n");
+        printf("\n");
     }
 }

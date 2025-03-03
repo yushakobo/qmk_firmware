@@ -18,17 +18,10 @@ def _detect_json_format(file, json_data):
     """
     json_encoder = None
     try:
-        validate(json_data, 'qmk.user_repo.v1_1')
+        validate(json_data, 'qmk.user_repo.v1')
         json_encoder = UserspaceJSONEncoder
     except ValidationError:
         pass
-
-    if json_encoder is None:
-        try:
-            validate(json_data, 'qmk.user_repo.v1')
-            json_encoder = UserspaceJSONEncoder
-        except ValidationError:
-            pass
 
     if json_encoder is None:
         try:

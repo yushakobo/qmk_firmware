@@ -1,2 +1,4 @@
+BACKLIGHT_ENABLE = yes        # Enable keyboard backlight functionality
+
 # Disable unsupported hardware
-AUDIO_SUPPORTED = no
+RGBLIGHT_ENABLE = no

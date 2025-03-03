@@ -56,13 +56,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    gpio_set_pin_output(LOCK_LED_PIN);
+    setPinOutput(LOCK_LED_PIN);
     switch (get_highest_layer(state)) {
         case _LOCK:
-            gpio_write_pin(LOCK_LED_PIN, 0);
+            writePin(LOCK_LED_PIN, 0);
             break;
         default: //  for any other layers, or the default layer
-            gpio_write_pin(LOCK_LED_PIN, 1);
+            writePin(LOCK_LED_PIN, 1);
             break;
     }
     return state;

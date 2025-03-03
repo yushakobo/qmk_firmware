@@ -5,10 +5,7 @@
     "usb": {
         "vid": "0x16C0",
         "pid": "0x27DB",
-        "device_version": "0.0.1",
-        "shared_endpoint": {
-            "keyboard": true
-        }
+        "device_version": "0.0.1"
     },
     "layouts": {
         "LAYOUT_all": {

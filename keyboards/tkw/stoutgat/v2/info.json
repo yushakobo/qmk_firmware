@@ -8,14 +8,6 @@
         "pid": "0x7811",
         "device_version": "0.0.2"
     },
-    "features": {
-        "bootmagic": true,
-        "encoder": true,
-        "extrakey": true,
-        "mousekey": true,
-        "nkro": true,
-        "rgblight": true
-    },
     "ws2812": {
         "pin": "B1",
         "driver": "pwm"
@@ -49,11 +41,7 @@
         ]
     },
     "qmk": {
-        "tap_keycode_delay": 10,
-        "locking": {
-            "enabled": true,
-            "resync": true
-        }
+        "tap_keycode_delay": 10
     },
     "community_layouts": ["65_iso", "65_ansi"],
     "layouts": {

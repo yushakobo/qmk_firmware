@@ -10,7 +10,9 @@
         "console": true,
         "extrakey": true,
         "mousekey": false,
-        "nkro": false
+        "nkro": false,
+        "unicode": false,
+        "backlight": false
     },
     "layout_aliases": {"LAYOUT": "LAYOUT_all"}
 }

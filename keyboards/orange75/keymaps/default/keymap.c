@@ -43,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `---------------------------------------------------------------'
     */
     LAYOUT(
-        QK_BOOT,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        QK_BOOT,            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, BL_TOGG,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, BL_STEP,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   _______, BL_UP, 
@@ -55,27 +55,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool led_update_user(led_t led_state) {
 
     if (led_state.num_lock) {
-        gpio_set_pin_output(B0);
-        gpio_write_pin_low(B0);
+        setPinOutput(B0);
+        writePinLow(B0);
     } else {
-        gpio_set_pin_input(B0);
-        gpio_write_pin_low(B0);
+        setPinInput(B0);
+        writePinLow(B0);
     }
 
     if (led_state.caps_lock) {
-        gpio_set_pin_output(B1);
-        gpio_write_pin_low(B1);
+        setPinOutput(B1);
+        writePinLow(B1);
     } else {
-        gpio_set_pin_input(B1);
-        gpio_write_pin_low(B1);
+        setPinInput(B1);
+        writePinLow(B1);
     }
 
     if (led_state.scroll_lock) {
-        gpio_set_pin_output(B2);
-        gpio_write_pin_low(B2);
+        setPinOutput(B2);
+        writePinLow(B2);
     } else {
-        gpio_set_pin_input(B2);
-        gpio_write_pin_low(B2);
+        setPinInput(B2);
+        writePinLow(B2);
     }
     return false;
 }

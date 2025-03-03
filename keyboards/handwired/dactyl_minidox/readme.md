@@ -1,6 +1,6 @@
 # Dactyl Minidox
 
-![DactylMinidox](https://i.imgur.com/PqjgeRf.jpeg)
+![DactylMinidox](https://i.imgur.com/PqjgeRfh.jpg)
 
 A 36 key (3x5+3), split bodied keyboard derived from the [Dactyl ManuForm](/keyboards/handwired/dactyl_manuform/).
 

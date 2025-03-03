@@ -15,12 +15,12 @@
 #include "quantum.h"
 
 void keyboard_pre_init_kb(void) {
-  gpio_set_pin_output(B1);
+  setPinOutput(B1);
   
   keyboard_pre_init_user();
 }
 
 layer_state_t layer_state_set_kb(layer_state_t state) {
-    gpio_write_pin(B1, layer_state_cmp(state, 1));
+    writePin(B1, layer_state_cmp(state, 1));
     return layer_state_set_user(state);
 }

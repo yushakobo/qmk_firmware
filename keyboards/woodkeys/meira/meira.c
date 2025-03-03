@@ -15,7 +15,11 @@
  */
 #include "meira.h"
 
-void matrix_init_kb(void) {
+void matrix_init_kb(void)
+{
+    debug_enable=true;
+    print("meira matrix_init_kb\n");
+
 #ifdef WATCHDOG_ENABLE
     // This is done after turning the layer LED red, if we're caught in a loop
     // we should get a flashing red light
@@ -27,22 +31,29 @@ void matrix_init_kb(void) {
     matrix_init_user();
 }
 
-void housekeeping_task_kb(void) {
+void matrix_scan_kb(void)
+{
 #ifdef WATCHDOG_ENABLE
     wdt_reset();
 #endif
+    matrix_scan_user();
 }
 
-bool shutdown_kb(bool jump_to_bootloader) {
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+    // Test code that turns on the switch led for the key that is pressed
+    // set_backlight_by_keymap(record->event.key.col, record->event.key.row);
+    if (keycode == QK_BOOT) {
+        reset_keyboard_kb();
+    }
+    return process_record_user(keycode, record);
+}
+
+void reset_keyboard_kb(void){
 #ifdef WATCHDOG_ENABLE
-    // Unconditionally run so shutdown_user can't mess up watchdog
     MCUSR = 0;
     wdt_disable();
     wdt_reset();
 #endif
-
-    if (!shutdown_user(jump_to_bootloader)) {
-        return false;
-    }
-    return true;
+    xprintf("programming!\n");
+    reset_keyboard();
 }

@@ -1,4 +1,6 @@
 #include "hotdox.h"
+#include "backlight.h"
+#include "quantum.h"
 
 extern inline void ergodox_board_led_on(void);
 extern inline void ergodox_right_led_1_on(void);

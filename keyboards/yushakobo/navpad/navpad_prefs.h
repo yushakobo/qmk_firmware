@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "keycodes.h"
+#include "quantum.h"
 
 enum custom_keycodes { 
   TAP_00 = QK_KB_0

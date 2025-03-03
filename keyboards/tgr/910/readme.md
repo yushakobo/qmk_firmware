@@ -12,7 +12,7 @@ Make example for this keyboard (after setting up your build environment):
 
     make tgr/910:default
 
-Flashing example for this keyboard:
+Flashing example for this keyboard ([after setting up the bootloadHID flashing environment](https://docs.qmk.fm/#/flashing_bootloadhid))
 
     make tgr/910:default:flash
 

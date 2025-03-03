@@ -27,12 +27,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [1] = LAYOUT_numpad(
-        _______,          UG_HUEU, UG_VALU,
-        TG(1),   UG_TOGG, UG_HUED, UG_VALD,
+        _______,          RGB_HUI, RGB_VAI,
+        TG(1),   RGB_TOG, RGB_HUD, RGB_VAD,
         KC_PGUP, KC_UP,   KC_PGDN,
-        KC_LEFT, KC_DOWN, KC_RGHT, UG_NEXT,
+        KC_LEFT, KC_DOWN, KC_RGHT, RGB_MOD,
         KC_INS,  KC_HOME, KC_END,
-        KC_ESC,           KC_DEL,  UG_PREV
+        KC_ESC,           KC_DEL,  RGB_RMOD
     ),
 
 };

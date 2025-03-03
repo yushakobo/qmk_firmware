@@ -46,6 +46,8 @@ void housekeeping_task_kb(void) {
     if (display_enabled) {
         display_housekeeping_task();
     }
+
+    housekeeping_task_user();
 }
 
 void keyboard_post_init_kb(void) {

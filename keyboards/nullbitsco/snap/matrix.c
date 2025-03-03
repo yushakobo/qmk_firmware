@@ -13,10 +13,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "matrix.h"
+#include <stdint.h>
+#include <stdbool.h>
 #include <string.h>
+#include "util.h"
+#include "matrix.h"
 #include "split_util.h"
-#include "wait.h"
+#include "quantum.h"
 
 #define VIRT_COLS_PER_HAND 1
 #define PHYS_COLS_PER_HAND (MATRIX_COLS - VIRT_COLS_PER_HAND)
@@ -37,23 +40,23 @@ static uint8_t* col_pins                        = col_pins_left;
 static void init_pins(void) {
     // Set cols to outputs, low
     for (uint8_t pin = 0; pin < MATRIX_MUX_COLS; pin++) {
-        gpio_set_pin_output(col_pins[pin]);
+        setPinOutput(col_pins[pin]);
     }
 
     // Unselect cols
     for (uint8_t bit = 0; bit < MATRIX_MUX_COLS; bit++) {
-        gpio_write_pin_low(col_pins[bit]);
+        writePinLow(col_pins[bit]);
     }
 
     // Set rows to input, pullup
     for (uint8_t pin = 0; pin < ROWS_PER_HAND; pin++) {
-        gpio_set_pin_input_high(row_pins[pin]);
+        setPinInputHigh(row_pins[pin]);
     }
 
     // Set extended pin (only on right side)
     if (!isLeftHand) {
         // Set extended pin to input, pullup
-        gpio_set_pin_input_high(MATRIX_EXT_PIN_RIGHT);
+        setPinInputHigh(MATRIX_EXT_PIN_RIGHT);
     }
 }
 
@@ -61,7 +64,7 @@ static void select_col(uint8_t col) {
     // Drive demux with correct column address
     for (uint8_t bit = 0; bit < MATRIX_MUX_COLS; bit++) {
         uint8_t state = (col & (0b1 << bit)) >> bit;
-        gpio_write_pin(col_pins[bit], !state);
+        writePin(col_pins[bit], !state);
     }
 }
 
@@ -71,7 +74,7 @@ static void read_rows_on_col(matrix_row_t current_matrix[], uint8_t current_col)
 
     // Read each row sequentially
     for (uint8_t row_index = 0; row_index < ROWS_PER_HAND; row_index++) {
-        if (gpio_read_pin(row_pins[row_index]) == 0) {
+        if (readPin(row_pins[row_index]) == 0) {
             current_matrix[row_index] |= (COL_SHIFTER << current_col);
         } else {
             current_matrix[row_index] &= ~(COL_SHIFTER << current_col);
@@ -82,7 +85,7 @@ static void read_rows_on_col(matrix_row_t current_matrix[], uint8_t current_col)
 static void read_ext_pin(matrix_row_t current_matrix[]) {
     // Read the state of the extended matrix pin
     if (!isLeftHand) {
-        if (gpio_read_pin(MATRIX_EXT_PIN_RIGHT) == 0) {
+        if (readPin(MATRIX_EXT_PIN_RIGHT) == 0) {
             current_matrix[EXT_PIN_ROW] |= (COL_SHIFTER << EXT_PIN_COL);
         } else {
             current_matrix[EXT_PIN_ROW] &= ~(COL_SHIFTER << EXT_PIN_COL);

@@ -31,17 +31,16 @@ enum planck_layers {
 };
 
 enum planck_keycodes {
-  PLOVER = SAFE_RANGE,
+  QWERTY = SAFE_RANGE,
+  COLEMAK,
+  DVORAK,
+  PLOVER,
   BACKLIT,
   EXT_PLV
 };
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
-
-#define QWERTY PDF(_QWERTY)
-#define COLEMAK PDF(_COLEMAK)
-#define DVORAK PDF(_DVORAK)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -166,7 +165,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_planck_grid(
-    _______, QK_BOOT, DB_TOGG, UG_TOGG, UG_NEXT, UG_HUEU, UG_HUED, UG_SATU, UG_SATD, UG_VALU, UG_VALD, KC_DEL ,
+    _______, QK_BOOT, DB_TOGG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DEL ,
     _______, _______, MU_NEXT, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, DVORAK,  PLOVER,  _______,
     _______, AU_PREV, AU_NEXT, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -185,6 +184,25 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case QWERTY:
+      if (record->event.pressed) {
+        print("mode just switched to qwerty and this is a huge string\n");
+        set_single_persistent_default_layer(_QWERTY);
+      }
+      return false;
+      break;
+    case COLEMAK:
+      if (record->event.pressed) {
+        set_single_persistent_default_layer(_COLEMAK);
+      }
+      return false;
+      break;
+    case DVORAK:
+      if (record->event.pressed) {
+        set_single_persistent_default_layer(_DVORAK);
+      }
+      return false;
+      break;
     case BACKLIT:
       if (record->event.pressed) {
         register_code(KC_RSFT);
@@ -192,12 +210,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           backlight_step();
         #endif
         #ifdef KEYBOARD_planck_rev5
-          gpio_write_pin_low(E6);
+          writePinLow(E6);
         #endif
       } else {
         unregister_code(KC_RSFT);
         #ifdef KEYBOARD_planck_rev5
-          gpio_write_pin_high(E6);
+          writePinHigh(E6);
         #endif
       }
       return false;

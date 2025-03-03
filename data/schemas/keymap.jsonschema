@@ -72,5 +72,10 @@
         "notes": {
             "type": "string"
         }
-    }
+    },
+    "required": [
+        "keyboard",
+        "layout",
+        "layers"
+    ]
 }

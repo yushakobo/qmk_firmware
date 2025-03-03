@@ -6,12 +6,14 @@
         "vid": "0xCB10"
     },
     "features": {
+        "audio": false,
         "bootmagic": true,
         "command": false,
         "console": false,
         "extrakey": true,
         "mousekey": false,
-        "nkro": false
+        "nkro": false,
+        "unicode": false
     },
     "split": {
         "enabled": true

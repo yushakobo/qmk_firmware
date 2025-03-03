@@ -1,2 +1,2 @@
-# custom matrix setup
+# Build Options
 SRC += matrix.c

@@ -3,9 +3,6 @@
 
 #include "satisfaction_core.h"
 #include "eeprom.h"
-#ifdef BACKLIGHT_ENABLE
-#    include "backlight.h"
-#endif
 
 void pre_encoder_mode_change(void){
   if(encoder_mode == ENC_MODE_CLOCK_SET){
@@ -101,7 +98,7 @@ uint16_t handle_encoder_clockwise(void){
       mapped_code = KC_MEDIA_NEXT_TRACK;
       break;
     case ENC_MODE_SCROLL:
-      mapped_code = QK_MOUSE_WHEEL_DOWN;
+      mapped_code = KC_WH_D;
       break;
 #ifdef BACKLIGHT_ENABLE
     case ENC_MODE_BACKLIGHT:
@@ -143,7 +140,7 @@ uint16_t handle_encoder_ccw(void){
       mapped_code = KC_MEDIA_PREV_TRACK;
       break;
     case ENC_MODE_SCROLL:
-      mapped_code = QK_MOUSE_WHEEL_UP;
+      mapped_code = KC_WH_U;
       break;
 #ifdef BACKLIGHT_ENABLE
     case ENC_MODE_BACKLIGHT:
@@ -186,7 +183,7 @@ uint16_t handle_encoder_press(void){
       mapped_code = KC_MEDIA_PLAY_PAUSE;
       break;
     case ENC_MODE_SCROLL:
-      mapped_code = QK_MOUSE_BUTTON_3;
+      mapped_code = KC_BTN3;
       break;
 #ifdef BACKLIGHT_ENABLE
     case ENC_MODE_BACKLIGHT:

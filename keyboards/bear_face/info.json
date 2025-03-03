@@ -1,24 +1,13 @@
 {
-    "manufacturer": "will-hedges",
-    "url": "https://github.com/will-hedges",
-    "maintainer": "will-hedges",
+    "keyboard_name": "bear_face",
+    "manufacturer": "chemicalwill",
+    "url": "https://github.com/chemicalwill/bear_face_pcb",
+    "maintainer": "chemicalwill",
+    "debounce": 6,
     "usb": {
         "vid": "0xFEED",
-        "pid": "0x09F5"
-    },
-    "features": {
-        "backlight": true,
-        "bootmagic": true,
-        "command": false,
-        "console": false,
-        "extrakey": true,
-        "mousekey": false
-    },
-    "qmk": {
-        "locking": {
-            "enabled": true,
-            "resync": true
-        }
+        "pid": "0x09F5",
+        "force_nkro": true
     },
     "matrix_pins": {
         "cols": ["B5", "C7", "C6", "F0", "E6", "B7", "D0", "D1", "D2", "D3", "D5", "D4", "D6", "D7", "B4"],
@@ -26,8 +15,7 @@
     },
     "diode_direction": "COL2ROW",
     "backlight": {
-        "as_caps_lock": true,
-        "driver": "software",
+        "driver": "timer",
         "pin": "F7"
     },
     "processor": "atmega32u4",

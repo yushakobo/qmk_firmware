@@ -25,15 +25,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool led_update_user(led_t led_state) {
 
     if (led_state.caps_lock) {
-        gpio_write_pin_high(F1);
+        writePinHigh(F1);
 	} else {
-        gpio_write_pin_low(F1);
+        writePinLow(F1);
     }
 
     if (led_state.scroll_lock) {
-        gpio_write_pin_high(F0);
+        writePinHigh(F0);
 	} else {
-        gpio_write_pin_low(F0);
+        writePinLow(F0);
     }
     
     if (!led_state.num_lock) {
@@ -46,13 +46,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         if (sysreq_led) {
             sysreq_led = false;
-            gpio_write_pin_low(F4);
+            writePinLow(F4);
         }
         else {
             switch(keycode) {
                 case KC_SYSTEM_REQUEST:
                     sysreq_led = true;
-                    gpio_write_pin_high(F4);
+                    writePinHigh(F4);
             }
         }
     }

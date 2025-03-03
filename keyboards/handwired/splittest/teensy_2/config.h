@@ -16,8 +16,11 @@
 
 #pragma once
 
+
 // use I2C on AVR
 #define USE_I2C
+
+#define SPLIT_HAND_PIN F0
 
 // teensy has vbus detection issues - use usb detection instead
 #define SPLIT_USB_DETECT

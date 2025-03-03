@@ -20,9 +20,9 @@ void matrix_init_kb(void) {
   // runs once when the firmware starts up
 
   //set the indicator LED pin to Output
-  gpio_set_pin_output(B5);
+  setPinOutput(B5);
   //set HIGH for off.
-  gpio_write_pin_high(B5);
+  writePinHigh(B5);
 
   //call any user functions
   matrix_init_user();

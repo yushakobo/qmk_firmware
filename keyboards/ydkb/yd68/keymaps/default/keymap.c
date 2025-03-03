@@ -43,7 +43,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case YD68_RGB_PWR:
       if (record->event.pressed) {
         // when keycode YD68_RGB_PWR is pressed
-		gpio_toggle_pin(E2);
+		PORTE ^= (1<<2);
       } else {
         // when keycode YD68_RGB_PWR is released
       }

@@ -20,7 +20,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [1] = LAYOUT_ortho_4x4(
     KC_NUM,  BL1,     KC_TRNS, KC_PSLS,
-    QK_BOOT, BL2,     KC_TRNS, KC_TRNS,
+    QK_BOOT,   BL2,     KC_TRNS, KC_TRNS,
     KC_TRNS, BL3,     KC_TRNS, KC_TRNS,
     KC_TRNS, BL4,     KC_TRNS, KC_TRNS
   ),
@@ -40,16 +40,32 @@ void set_led(int idx, bool enable) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
   case BL1:
-    gpio_write_pin(B4, record->event.pressed);
+    if (record->event.pressed) {
+      PORTB |= (1 << 4);
+    } else {
+      PORTB &= ~(1 << 4);
+    }
     return false;
   case BL2:
-    gpio_write_pin(B5, record->event.pressed);
+    if (record->event.pressed) {
+      PORTB |= (1 << 5);
+    } else {
+      PORTB &= ~(1 << 5);
+    }
     return false;
   case BL3:
-    gpio_write_pin(B6, record->event.pressed);
+    if (record->event.pressed) {
+      PORTB |= (1 << 6);
+    } else {
+      PORTB &= ~(1 << 6);
+    }
     return false;
   case BL4:
-    gpio_write_pin(B7, record->event.pressed);
+    if (record->event.pressed) {
+      PORTB |= (1 << 7);
+    } else {
+      PORTB &= ~(1 << 7);
+    }
     return false;
   }
   return true;
@@ -57,13 +73,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 void matrix_init_user(void) {
   /* set LED row pins to output and low */
-  gpio_set_pin_output(B4);
-  gpio_set_pin_output(B5);
-  gpio_set_pin_output(B6);
-  gpio_set_pin_output(B7);
-
-  gpio_write_pin_low(B4);
-  gpio_write_pin_low(B5);
-  gpio_write_pin_low(B6);
-  gpio_write_pin_low(B7);
+  DDRB |= (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7);
+  PORTB &= ~(1 << 4) & ~(1 << 5) & ~(1 << 6) & ~(1 << 7);
 }

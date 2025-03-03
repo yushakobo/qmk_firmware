@@ -22,8 +22,9 @@ void matrix_init_kb(void) {
     matrix_init_user();
 }
 
-void housekeeping_task_kb(void) {
+void matrix_scan_kb(void) {
     update_fallacy_leds();
+    matrix_scan_user();
 }
  
 /* update LED driver with usb led_state

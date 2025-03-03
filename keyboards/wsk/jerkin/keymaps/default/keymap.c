@@ -39,27 +39,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 void matrix_init_user(void) {
   // set CapsLock LED to output and low
-  gpio_set_pin_output(B2);
-  gpio_write_pin_low(B2);
+  setPinOutput(B2);
+  writePinLow(B2);
   // set NumLock LED to output and low
-  gpio_set_pin_output(B6);
-  gpio_write_pin_low(B6);
+  setPinOutput(B6);
+  writePinLow(B6);
 
 }
 
 layer_state_t layer_state_set_user(layer_state_t state)
 {
     if (layer_state_cmp(state, 1)) {
-        gpio_write_pin_high(B2);
+        writePinHigh(B2);
     } else if (state & (1<<2)) {
-        gpio_write_pin_low(B2);
-        gpio_write_pin_high(B6);
+        writePinLow(B2);
+        writePinHigh(B6);
     } else if (state & (1<<3)) {
-        gpio_write_pin_high(B2);
-        gpio_write_pin_high(B6);
+        writePinHigh(B2);
+        writePinHigh(B6);
     } else {
-        gpio_write_pin_low(B2);
-        gpio_write_pin_low(B6);
+        writePinLow(B2);
+        writePinLow(B6);
     }
     return state;
 }

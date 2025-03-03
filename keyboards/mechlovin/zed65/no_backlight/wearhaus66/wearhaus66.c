@@ -17,9 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "quantum.h"
 
-void keyboard_pre_init_kb(void) {
+void keyboard_pre_init_user(void) {
+  // Call the keyboard pre init code.
   // Set our LED pins as output
-  gpio_set_pin_output(B7);
-
-  keyboard_pre_init_user();
+  setPinOutput(B7);
 }

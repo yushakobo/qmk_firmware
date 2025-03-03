@@ -19,8 +19,6 @@
 
 void matrix_init_kb(void) {
   uart_init(9600);
-
-  matrix_init_user();
 }
 #endif
 

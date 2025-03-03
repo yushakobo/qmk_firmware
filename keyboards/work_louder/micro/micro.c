@@ -49,29 +49,29 @@ bool encoder_update_kb(uint8_t index, bool clockwise) {
 #endif
 
 void work_louder_micro_led_1_on(void) {
-    gpio_set_pin_output(WORK_LOUDER_LED_PIN_1);
-    gpio_write_pin(WORK_LOUDER_LED_PIN_1, true);
+    setPinOutput(WORK_LOUDER_LED_PIN_1);
+    writePin(WORK_LOUDER_LED_PIN_1, true);
 }
 void work_louder_micro_led_2_on(void) {
-    gpio_set_pin_output(WORK_LOUDER_LED_PIN_2);
-    gpio_write_pin(WORK_LOUDER_LED_PIN_2, true);
+    setPinOutput(WORK_LOUDER_LED_PIN_2);
+    writePin(WORK_LOUDER_LED_PIN_2, true);
 }
 void work_louder_micro_led_3_on(void) {
-    gpio_set_pin_output(WORK_LOUDER_LED_PIN_3);
-    gpio_write_pin(WORK_LOUDER_LED_PIN_3, true);
+    setPinOutput(WORK_LOUDER_LED_PIN_3);
+    writePin(WORK_LOUDER_LED_PIN_3, true);
 }
 
 void work_louder_micro_led_1_off(void) {
-    gpio_set_pin_input(WORK_LOUDER_LED_PIN_1);
-    gpio_write_pin(WORK_LOUDER_LED_PIN_1, false);
+    setPinInput(WORK_LOUDER_LED_PIN_1);
+    writePin(WORK_LOUDER_LED_PIN_1, false);
 }
 void work_louder_micro_led_2_off(void) {
-    gpio_set_pin_input(WORK_LOUDER_LED_PIN_2);
-    gpio_write_pin(WORK_LOUDER_LED_PIN_2, false);
+    setPinInput(WORK_LOUDER_LED_PIN_2);
+    writePin(WORK_LOUDER_LED_PIN_2, false);
 }
 void work_louder_micro_led_3_off(void) {
-    gpio_set_pin_input(WORK_LOUDER_LED_PIN_3);
-    gpio_write_pin(WORK_LOUDER_LED_PIN_3, false);
+    setPinInput(WORK_LOUDER_LED_PIN_3);
+    writePin(WORK_LOUDER_LED_PIN_3, false);
 }
 
 void work_louder_micro_led_all_on(void) {
