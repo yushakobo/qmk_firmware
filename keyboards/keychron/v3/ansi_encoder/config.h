@@ -25,5 +25,5 @@
 /* Encoder Configuration */
 #define ENCODER_DEFAULT_POS 0x3
 
-/* Enable CapsLock LED */
+/* Enable CapsLcok LED */
 #define CAPS_LOCK_LED_INDEX 50

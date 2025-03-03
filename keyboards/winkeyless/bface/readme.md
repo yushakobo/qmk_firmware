@@ -10,7 +10,7 @@ Make example for this keyboard (after setting up your build environment):
 
     make winkeyless/bface:default
 
-Flashing example for this keyboard:
+Flashing example for this keyboard ([after setting up the bootloadHID flashing environment](https://docs.qmk.fm/#/flashing_bootloadhid))
 
     make winkeyless/bface:default:flash
 

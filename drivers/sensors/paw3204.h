@@ -18,7 +18,6 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "pointing_device.h"
 
 #ifndef PAW3204_SCLK_PIN
 #    ifdef POINTING_DEVICE_SCLK_PIN
@@ -40,8 +39,6 @@ typedef struct {
     int16_t y;
     bool    isMotion;
 } report_paw3204_t;
-
-const pointing_device_driver_t paw3204_pointing_device_driver;
 
 /**
  * @brief Initializes the sensor so it is in a working state and ready to
@@ -77,5 +74,3 @@ void paw3204_set_cpi(uint16_t cpi);
  * @return uint16_t Current CPI value of the sensor
  */
 uint16_t paw3204_get_cpi(void);
-
-report_mouse_t paw3204_get_report(report_mouse_t mouse_report);

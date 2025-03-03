@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "matrix.h"
+#include "quantum.h"
 #include "i2c_slave.h"
 
 #define MY_I2C_ADDRESS (0x20U << 1)

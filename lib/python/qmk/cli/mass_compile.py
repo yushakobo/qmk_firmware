@@ -7,20 +7,16 @@ from typing import List
 from pathlib import Path
 from subprocess import DEVNULL
 from milc import cli
-import shlex
 
 from qmk.constants import QMK_FIRMWARE
 from qmk.commands import find_make, get_make_parallel_args, build_environment
 from qmk.search import search_keymap_targets, search_make_targets
 from qmk.build_targets import BuildTarget, JsonKeymapBuildTarget
-from qmk.util import maybe_exit_config
 
 
 def mass_compile_targets(targets: List[BuildTarget], clean: bool, dry_run: bool, no_temp: bool, parallel: int, **env):
     if len(targets) == 0:
         return
-
-    os.environ.setdefault('SKIP_SCHEMA_VALIDATION', '1')
 
     make_cmd = find_make()
     builddir = Path(QMK_FIRMWARE) / '.build'
@@ -29,8 +25,7 @@ def mass_compile_targets(targets: List[BuildTarget], clean: bool, dry_run: bool,
     if dry_run:
         cli.log.info('Compilation targets:')
         for target in sorted(targets, key=lambda t: (t.keyboard, t.keymap)):
-            extra_args = ' '.join([f"-e {shlex.quote(f'{k}={v}')}" for k, v in target.extra_args.items()])
-            cli.log.info(f"{{fg_cyan}}qmk compile -kb {target.keyboard} -km {target.keymap} {extra_args}{{fg_reset}}")
+            cli.log.info(f"{{fg_cyan}}qmk compile -kb {target.keyboard} -km {target.keymap}{{fg_reset}}")
     else:
         if clean:
             cli.run([make_cmd, 'clean'], capture_output=False, stdin=DEVNULL)
@@ -40,26 +35,18 @@ def mass_compile_targets(targets: List[BuildTarget], clean: bool, dry_run: bool,
             for target in sorted(targets, key=lambda t: (t.keyboard, t.keymap)):
                 keyboard_name = target.keyboard
                 keymap_name = target.keymap
-                keyboard_safe = keyboard_name.replace('/', '_')
-                target_filename = target.target_name(**env)
                 target.configure(parallel=1)  # We ignore parallelism on a per-build basis as we defer to the parent make invocation
                 target.prepare_build(**env)  # If we've got json targets, allow them to write out any extra info to .build before we kick off `make`
                 command = target.compile_command(**env)
                 command[0] = '+@$(MAKE)'  # Override the make so that we can use jobserver to handle parallelism
-                extra_args = '_'.join([f"{k}_{v}" for k, v in target.extra_args.items()])
+                keyboard_safe = keyboard_name.replace('/', '_')
                 build_log = f"{QMK_FIRMWARE}/.build/build.log.{os.getpid()}.{keyboard_safe}.{keymap_name}"
                 failed_log = f"{QMK_FIRMWARE}/.build/failed.log.{os.getpid()}.{keyboard_safe}.{keymap_name}"
-                target_suffix = ''
-                if len(extra_args) > 0:
-                    build_log += f".{extra_args}"
-                    failed_log += f".{extra_args}"
-                    target_suffix = f"_{extra_args}"
                 # yapf: disable
                 f.write(
                     f"""\
-.PHONY: {target_filename}{target_suffix}_binary
-all: {target_filename}{target_suffix}_binary
-{target_filename}{target_suffix}_binary:
+all: {keyboard_safe}_{keymap_name}_binary
+{keyboard_safe}_{keymap_name}_binary:
 	@rm -f "{build_log}" || true
 	@echo "Compiling QMK Firmware for target: '{keyboard_name}:{keymap_name}'..." >>"{build_log}"
 	{' '.join(command)} \\
@@ -77,9 +64,9 @@ all: {target_filename}{target_suffix}_binary
                     # yapf: disable
                     f.write(
                         f"""\
-	@rm -rf "{QMK_FIRMWARE}/.build/{target_filename}.elf" 2>/dev/null || true
-	@rm -rf "{QMK_FIRMWARE}/.build/{target_filename}.map" 2>/dev/null || true
-	@rm -rf "{QMK_FIRMWARE}/.build/obj_{target_filename}" || true
+	@rm -rf "{QMK_FIRMWARE}/.build/{keyboard_safe}_{keymap_name}.elf" 2>/dev/null || true
+	@rm -rf "{QMK_FIRMWARE}/.build/{keyboard_safe}_{keymap_name}.map" 2>/dev/null || true
+	@rm -rf "{QMK_FIRMWARE}/.build/obj_{keyboard_safe}_{keymap_name}" || true
 """# noqa
                     )
                     # yapf: enable
@@ -113,8 +100,6 @@ all: {target_filename}{target_suffix}_binary
 def mass_compile(cli):
     """Compile QMK Firmware against all keyboards.
     """
-    maybe_exit_config(should_exit=False, should_reraise=True)
-
     if len(cli.args.builds) > 0:
         json_like_targets = list([Path(p) for p in filter(lambda e: Path(e).exists() and Path(e).suffix == '.json', cli.args.builds)])
         make_like_targets = list(filter(lambda e: Path(e) not in json_like_targets, cli.args.builds))

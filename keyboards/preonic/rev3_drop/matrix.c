@@ -15,10 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "matrix.h"
-#include "debug.h"
-#include "timer.h"
-#include "wait.h"
+#include "quantum.h"
 
 #ifndef DEBOUNCE
 #    define DEBOUNCE 5

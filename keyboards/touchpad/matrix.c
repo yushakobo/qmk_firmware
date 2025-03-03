@@ -23,8 +23,7 @@ SOFTWARE.
 
 #include "matrix.h"
 #include "i2c_master.h"
-#include "print.h"
-#include <string.h>
+#include "quantum.h"
 
 #define VIBRATE_LENGTH 50 //Defines number of interrupts motor will vibrate for, must be bigger than 8 for correct operation
 volatile uint8_t vibrate = 0; //Trigger vibration in interrupt
@@ -127,32 +126,32 @@ void matrix_init(void) {
   i2c_init();
 
   //Motor enable
-  gpio_set_pin_output(E6);
+  setPinOutput(E6);
   //Motor PWM
-  gpio_set_pin_output(D7);
+  setPinOutput(D7);
 
   //Power LED
-  gpio_set_pin_output(B7);
-  gpio_write_pin_high(B7);
+  setPinOutput(B7);
+  writePinHigh(B7);
 
   //LEDs Columns
-  gpio_set_pin_output(F7);
-  gpio_set_pin_output(F6);
-  gpio_set_pin_output(F5);
-  gpio_set_pin_output(F4);
-  gpio_set_pin_output(F1);
-  gpio_set_pin_output(F0);
+  setPinOutput(F7);
+  setPinOutput(F6);
+  setPinOutput(F5);
+  setPinOutput(F4);
+  setPinOutput(F1);
+  setPinOutput(F0);
 
   //LEDs Rows
-  gpio_set_pin_output(D6);
-  gpio_set_pin_output(B4);
-  gpio_set_pin_output(B5);
-  gpio_set_pin_output(B6);
-  gpio_set_pin_output(C6);
-  gpio_set_pin_output(C7);
+  setPinOutput(D6);
+  setPinOutput(B4);
+  setPinOutput(B5);
+  setPinOutput(B6);
+  setPinOutput(C6);
+  setPinOutput(C7);
 
   //Capacitive Interrupt
-  gpio_set_pin_input(D2);
+  setPinInput(D2);
 
   capSetup();
   writeDataToTS(0x06, 0x12); //Calibrate capacitive touch IC
@@ -208,7 +207,7 @@ void touchClearCurrentDetections(void) {
 
 //Check interrupt pin
 uint8_t isTouchChangeDetected(void) {
-  return !gpio_read_pin(D2);
+  return !readPin(D2);
 }
 
 uint8_t matrix_scan(void) {
@@ -232,34 +231,34 @@ uint8_t matrix_scan(void) {
   for (uint8_t c = 0; c < 6; c++) {
     for (uint8_t r = 0; r < 6; r++) {
       switch (r) {
-        case 0: gpio_write_pin(D6, matrix_is_on(r, c)); break;
-        case 1: gpio_write_pin(B4, matrix_is_on(r, c)); break;
-        case 2: gpio_write_pin(B5, matrix_is_on(r, c)); break;
-        case 3: gpio_write_pin(B6, matrix_is_on(r, c)); break;
-        case 4: gpio_write_pin(C6, matrix_is_on(r, c)); break;
-        case 5: gpio_write_pin(C7, matrix_is_on(r, c)); break;
+        case 0: writePin(D6, matrix_is_on(r, c)); break;
+        case 1: writePin(B4, matrix_is_on(r, c)); break;
+        case 2: writePin(B5, matrix_is_on(r, c)); break;
+        case 3: writePin(B6, matrix_is_on(r, c)); break;
+        case 4: writePin(C6, matrix_is_on(r, c)); break;
+        case 5: writePin(C7, matrix_is_on(r, c)); break;
       }
 
       switch (c) {
-        case 0: gpio_write_pin(F5, !matrix_is_on(r, c)); break;
-        case 1: gpio_write_pin(F4, !matrix_is_on(r, c)); break;
-        case 2: gpio_write_pin(F1, !matrix_is_on(r, c)); break;
-        case 3: gpio_write_pin(F0, !matrix_is_on(r, c)); break;
-        case 4: gpio_write_pin(F6, !matrix_is_on(r, c)); break;
-        case 5: gpio_write_pin(F7, !matrix_is_on(r, c)); break;
+        case 0: writePin(F5, !matrix_is_on(r, c)); break;
+        case 1: writePin(F4, !matrix_is_on(r, c)); break;
+        case 2: writePin(F1, !matrix_is_on(r, c)); break;
+        case 3: writePin(F0, !matrix_is_on(r, c)); break;
+        case 4: writePin(F6, !matrix_is_on(r, c)); break;
+        case 5: writePin(F7, !matrix_is_on(r, c)); break;
       }
     }
   }
 
   if (vibrate == VIBRATE_LENGTH) {
-    gpio_write_pin_high(E6);
-    gpio_write_pin_high(D7);
+    writePinHigh(E6);
+    writePinHigh(D7);
     vibrate--;
   }  else if (vibrate > 0) {
     vibrate--;
   } else if (vibrate == 0) {
-    gpio_write_pin_low(D7);
-    gpio_write_pin_low(E6);
+    writePinLow(D7);
+    writePinLow(E6);
   }
 
   matrix_scan_kb();
@@ -277,16 +276,16 @@ matrix_row_t matrix_get_row(uint8_t row) {
 }
 
 void matrix_print(void) {
-    xprintf("\nr/c 01234567\n");
+    printf("\nr/c 01234567\n");
     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
-        xprintf("%X0: ", row);
+        printf("%X0: ", row);
         matrix_row_t data = matrix_get_row(row);
         for (int col = 0; col < MATRIX_COLS; col++) {
             if (data & (1<<col))
-                xprintf("1");
+                printf("1");
             else
-                xprintf("0");
+                printf("0");
         }
-        xprintf("\n");
+        printf("\n");
     }
 }

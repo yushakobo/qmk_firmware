@@ -15,10 +15,24 @@
  */
 
 
-#include "quantum.h"
+#include "selene.h"
 
-void keyboard_post_init_kb(void) {
+void matrix_init_kb(void){
+    setPinOutput(NUM_LOCK_PIN);
+    setPinOutput(CAPS_LOCK_PIN);
+    setPinOutput(SCROLL_LOCK_PIN);
+}
+
+void keyboard_post_init_user(void) {
     rgblight_setrgb(0xff, 0xff, 0xff);
+}
 
-    keyboard_post_init_user();
+bool led_update_kb(led_t led_state) {
+    bool res = led_update_user(led_state);
+    if(res) {
+        writePin(NUM_LOCK_PIN, led_state.num_lock);
+        writePin(CAPS_LOCK_PIN, led_state.caps_lock);
+        writePin(SCROLL_LOCK_PIN, led_state.scroll_lock);
+    }
+    return res;
 }

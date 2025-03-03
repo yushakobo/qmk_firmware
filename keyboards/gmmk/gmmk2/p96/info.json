@@ -1,10 +1,4 @@
 {
-    "qmk": {
-        "locking": {
-            "enabled": true,
-            "resync": true
-        }
-    },
     "rgb_matrix": {
         "animations": {
             "alphas_mods": true,

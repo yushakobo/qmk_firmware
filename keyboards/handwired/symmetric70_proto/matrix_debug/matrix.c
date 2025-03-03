@@ -14,11 +14,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "atomic_util.h"
+#include <stdint.h>
+#include <stdbool.h>
 #include "util.h"
-#include "wait.h"
 #include "matrix.h"
 #include "debounce.h"
+#include "quantum.h"
 #ifndef readPort
 #    include "gpio_extr.h"
 #endif
@@ -60,15 +61,15 @@ static const uint8_t delay_sel[] = {MATRIX_IO_DELAY_MULSEL};
 extern matrix_row_t raw_matrix[MATRIX_ROWS];  // raw values
 extern matrix_row_t matrix[MATRIX_ROWS];      // debounced values
 
-static inline void gpio_atomic_set_pin_output_low(pin_t pin) {
+static inline void setPinOutput_writeLow(pin_t pin) {
     ATOMIC_BLOCK_FORCEON {
-        gpio_set_pin_output(pin);
-        gpio_write_pin_low(pin);
+        setPinOutput(pin);
+        writePinLow(pin);
     }
 }
 
-static inline void gpio_atomic_set_pin_input_high(pin_t pin) {
-    ATOMIC_BLOCK_FORCEON { gpio_set_pin_input_high(pin); }
+static inline void setPinInputHigh_atomic(pin_t pin) {
+    ATOMIC_BLOCK_FORCEON { setPinInputHigh(pin); }
 }
 
 // matrix code
@@ -80,7 +81,7 @@ static void init_pins(void) {
         for (int col = 0; col < MATRIX_COLS; col++) {
             pin_t pin = direct_pins[row][col];
             if (pin != NO_PIN) {
-                gpio_set_pin_input_high(pin);
+                setPinInputHigh(pin);
             }
         }
     }
@@ -93,7 +94,7 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
     for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++) {
         pin_t pin = direct_pins[current_row][col_index];
         if (pin != NO_PIN) {
-            current_row_value |= gpio_read_pin(pin) ? 0 : (MATRIX_ROW_SHIFTER << col_index);
+            current_row_value |= readPin(pin) ? 0 : (MATRIX_ROW_SHIFTER << col_index);
         }
     }
 
@@ -108,24 +109,24 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
 #elif defined(DIODE_DIRECTION)
 #    if (DIODE_DIRECTION == COL2ROW)
 
-static void select_row(uint8_t row) { gpio_atomic_set_pin_output_low(row_pins[row]); }
+static void select_row(uint8_t row) { setPinOutput_writeLow(row_pins[row]); }
 
-static void unselect_row(uint8_t row) { gpio_atomic_set_pin_input_high(row_pins[row]); }
+static void unselect_row(uint8_t row) { setPinInputHigh_atomic(row_pins[row]); }
 
 static void unselect_rows(void) {
     for (uint8_t x = 0; x < MATRIX_ROWS; x++) {
-        gpio_atomic_set_pin_input_high(row_pins[x]);
+        setPinInputHigh_atomic(row_pins[x]);
     }
 }
 
 static void init_pins(void) {
 #        ifdef MATRIX_MUL_SELECT
-    gpio_set_pin_output(MATRIX_MUL_SELECT);
-    gpio_write_pin_low(MATRIX_MUL_SELECT);
+    setPinOutput(MATRIX_MUL_SELECT);
+    writePinLow(MATRIX_MUL_SELECT);
 #        endif
     unselect_rows();
     for (uint8_t x = 0; x < MATRIX_COLS; x++) {
-        gpio_atomic_set_pin_input_high(col_pins[x]);
+        setPinInputHigh_atomic(col_pins[x]);
     }
 }
 
@@ -141,10 +142,10 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
     for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++) {
         // Select the col pin to read (active low)
 #        ifdef MATRIX_MUL_SELECT
-        gpio_write_pin(MATRIX_MUL_SELECT, col_sel[col_index]);
+        writePin(MATRIX_MUL_SELECT, col_sel[col_index]);
         waitInputPinDelay();
 #        endif
-        uint8_t pin_state = gpio_read_pin(col_pins[col_index]);
+        uint8_t pin_state = readPin(col_pins[col_index]);
 
         // Populate the matrix row with the state of the col pin
         current_row_value |= pin_state ? 0 : (MATRIX_ROW_SHIFTER << col_index);
@@ -160,7 +161,7 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
             is_pressed = false;
             for (uint8_t i = 0; i < ARRAY_SIZE(delay_ports); i++) {
 #            ifdef MATRIX_IO_DELAY_MULSEL
-                gpio_write_pin(MATRIX_MUL_SELECT, delay_sel[i]);
+                writePin(MATRIX_MUL_SELECT, delay_sel[i]);
                 waitInputPinDelay();
 #            endif
                 is_pressed |= ((readPort(delay_ports[i]) & delay_masks[i]) != delay_masks[i]);
@@ -174,10 +175,10 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
         for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++) {
             MATRIX_DEBUG_DELAY_START();
 #            ifdef MATRIX_MUL_SELECT
-            gpio_write_pin(MATRIX_MUL_SELECT, col_sel[col_index]);
+            writePin(MATRIX_MUL_SELECT, col_sel[col_index]);
             waitInputPinDelay();
 #            endif
-            while (gpio_read_pin(col_pins[col_index]) == 0) {
+            while (readPin(col_pins[col_index]) == 0) {
             }
             MATRIX_DEBUG_DELAY_END();
         }
@@ -193,10 +194,10 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
                 MATRIX_DEBUG_DELAY_END();
                 MATRIX_DEBUG_DELAY_START();
 #            ifdef MATRIX_MUL_SELECT
-                gpio_write_pin(MATRIX_MUL_SELECT, col_sel[col_index]);
+                writePin(MATRIX_MUL_SELECT, col_sel[col_index]);
                 waitInputPinDelay();
 #            endif
-                state |= (gpio_read_pin(col_pins[col_index]) == 0);
+                state |= (readPin(col_pins[col_index]) == 0);
             }
             MATRIX_DEBUG_DELAY_END();
         } while (state);
@@ -218,20 +219,20 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
 
 #    elif (DIODE_DIRECTION == ROW2COL)
 
-static void select_col(uint8_t col) { gpio_atomic_set_pin_output_low(col_pins[col]); }
+static void select_col(uint8_t col) { setPinOutput_writeLow(col_pins[col]); }
 
-static void unselect_col(uint8_t col) { gpio_atomic_set_pin_input_high(col_pins[col]); }
+static void unselect_col(uint8_t col) { setPinInputHigh_atomic(col_pins[col]); }
 
 static void unselect_cols(void) {
     for (uint8_t x = 0; x < MATRIX_COLS; x++) {
-        gpio_atomic_set_pin_input_high(col_pins[x]);
+        setPinInputHigh_atomic(col_pins[x]);
     }
 }
 
 static void init_pins(void) {
     unselect_cols();
     for (uint8_t x = 0; x < MATRIX_ROWS; x++) {
-        gpio_atomic_set_pin_input_high(row_pins[x]);
+        setPinInputHigh_atomic(row_pins[x]);
     }
 }
 
@@ -250,7 +251,7 @@ static bool read_rows_on_col(matrix_row_t current_matrix[], uint8_t current_col)
         matrix_row_t current_row_value = last_row_value;
 
         // Check row pin state
-        if (gpio_read_pin(row_pins[row_index]) == 0) {
+        if (readPin(row_pins[row_index]) == 0) {
             // Pin LO, set col bit
             current_row_value |= (MATRIX_ROW_SHIFTER << current_col);
             key_pressed = true;

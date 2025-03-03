@@ -3,11 +3,11 @@
 void matrix_init_kb(void) {
 	// put your keyboard start-up code here
 	// runs once when the firmware starts up
-	gpio_set_pin_output(C6);
-	gpio_write_pin_low(C6);
+	DDRC |= (1<<6);
+	PORTC &= ~(1<<6);
 	
-	gpio_set_pin_output(D4);
-	gpio_write_pin_low(D4);
+	DDRD |= (1<<4);
+	PORTD &= ~(1<<4);
 	
 	matrix_init_user();
 	

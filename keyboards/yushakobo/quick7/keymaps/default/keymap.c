@@ -29,12 +29,12 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
     [_BASE] = LAYOUT(
-        KC_MUTE,   MO(_FUNC1), UG_NEXT,
+        KC_MUTE,   MO(_FUNC1), RGB_MOD,
         S(KC_TAB), KC_UP,      KC_TAB,
         KC_LEFT,   KC_DOWN,    KC_RGHT
     ),
     [_FUNC1] = LAYOUT(
-        QK_BOOT, KC_TRNS, UG_TOGG,
+        QK_BOOT,   KC_TRNS, RGB_TOG,
         KC_HOME, KC_VOLU, KC_END,
         KC_MPRV, KC_VOLD, KC_MNXT
     )
@@ -44,7 +44,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case YUSHAURL:
             if (record->event.pressed) {
+                // when keycode QMKURL is pressed
                 SEND_STRING("https://yushakobo.jp/\n");
+            } else {
+                // when keycode QMKURL is released
             }
             break;
     }

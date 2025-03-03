@@ -15,6 +15,8 @@
  */
 #include "v60_type_r.h"
 
+#include "quantum.h"
+
 // if we've got an RGB underglow!
 #ifdef RGBLIGHT_ENABLE
 
@@ -115,22 +117,18 @@ void rgb_timer_init(void) {
 }
 
 void rgb_init(void) {
-    gpio_set_pin_output(F4);
-    gpio_set_pin_output(F5);
-    gpio_set_pin_output(F6);
-    gpio_write_pin_high(F4);
-    gpio_write_pin_high(F5);
-    gpio_write_pin_high(F6);
+    DDRF  |= (_BV(PF6) | _BV(PF5) | _BV(PF4));
+    PORTF |= (_BV(PF6) | _BV(PF5) | _BV(PF4));
 
     rgb_timer_init();
 }
 
-void set_rgb_pin_on(pin_t pin) {
-	gpio_write_pin_low(pin);
+void set_rgb_pin_on(uint8_t pin) {
+	PORTF &= ~_BV(pin);
 }
 
-void set_rgb_pin_off(pin_t pin) {
-	gpio_write_pin_high(pin);
+void set_rgb_pin_off(uint8_t pin) {
+	PORTF |= _BV(pin);
 }
 
 ISR(TIMER3_COMPA_vect)

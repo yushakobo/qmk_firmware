@@ -1,26 +1,24 @@
 #include "idb_60.h"
 
 void keyboard_pre_init_kb(void) {
-    gpio_set_pin_output(C4);
-    gpio_set_pin_output(C5);
-
-    keyboard_pre_init_user();
+    setPinOutput(C4);
+    setPinOutput(C5);
 }
 
 inline void _idb_60_caps_led_on(void) {
-    gpio_write_pin_low(C5);
+    writePinLow(C5);
 }
 
 inline void _idb_60_fn_led_on(void) {
-    gpio_write_pin_low(C4);
+    writePinLow(C4);
 }
 
 inline void _idb_60_caps_led_off(void) {
-    gpio_write_pin_high(C5);
+    writePinHigh(C5);
 }
 
 inline void _idb_60_fn_led_off(void) {
-    gpio_write_pin_high(C4);
+    writePinHigh(C4);
 }
 
 // Capslock LED indicator

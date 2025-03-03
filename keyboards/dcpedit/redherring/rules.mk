@@ -1,1 +1,2 @@
 F_CPU = 16000000
+HAPTIC_DRIVER = solenoid

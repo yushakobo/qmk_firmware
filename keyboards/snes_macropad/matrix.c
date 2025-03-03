@@ -36,48 +36,48 @@ static const int kbd_pin_map[] = {
 
 void matrix_init_custom(void) {
     // init snes controller
-    gpio_set_pin_input_high(SNES_D0);
+    setPinInputHigh(SNES_D0);
     // todo: look into protocol for other strange snes controllers that use D1 and IO
-    // gpio_set_pin_input_high(SNES_D1);
-    // gpio_set_pin_input_high(SNES_IO);
-    gpio_set_pin_output(SNES_CLOCK);
-    gpio_set_pin_output(SNES_LATCH);
-    gpio_write_pin_low(SNES_CLOCK);
-    gpio_write_pin_low(SNES_LATCH);
+    // setPinInputHigh(SNES_D1);
+    // setPinInputHigh(SNES_IO);
+    setPinOutput(SNES_CLOCK);
+    setPinOutput(SNES_LATCH);
+    writePinLow(SNES_CLOCK);
+    writePinLow(SNES_LATCH);
 
     // init rows
-    gpio_set_pin_output(KBD_ROW0);
-    gpio_set_pin_output(KBD_ROW1);
-    gpio_set_pin_output(KBD_ROW2);
-    gpio_write_pin_high(KBD_ROW0);
-    gpio_write_pin_high(KBD_ROW1);
-    gpio_write_pin_high(KBD_ROW2);
+    setPinOutput(KBD_ROW0);
+    setPinOutput(KBD_ROW1);
+    setPinOutput(KBD_ROW2);
+    writePinHigh(KBD_ROW0);
+    writePinHigh(KBD_ROW1);
+    writePinHigh(KBD_ROW2);
 
     // init columns
-    gpio_set_pin_input_high(KBD_COL0);
-    gpio_set_pin_input_high(KBD_COL1);
-    gpio_set_pin_input_high(KBD_COL2);
-    gpio_set_pin_input_high(KBD_COL3);
+    setPinInputHigh(KBD_COL0);
+    setPinInputHigh(KBD_COL1);
+    setPinInputHigh(KBD_COL2);
+    setPinInputHigh(KBD_COL3);
 }
 
 static matrix_row_t readRow(size_t row, int setupDelay) {
     const int pin = kbd_pin_map[row];
 
     // select the row
-    gpio_set_pin_output(pin);
-    gpio_write_pin_low(pin);
+    setPinOutput(pin);
+    writePinLow(pin);
     wait_us(setupDelay);
 
     // read the column data
     const matrix_row_t ret =
-          (gpio_read_pin(KBD_COL0) ? 0 : 1 << 0)
-        | (gpio_read_pin(KBD_COL1) ? 0 : 1 << 1)
-        | (gpio_read_pin(KBD_COL2) ? 0 : 1 << 2)
-        | (gpio_read_pin(KBD_COL3) ? 0 : 1 << 3);
+          (readPin(KBD_COL0) ? 0 : 1 << 0)
+        | (readPin(KBD_COL1) ? 0 : 1 << 1)
+        | (readPin(KBD_COL2) ? 0 : 1 << 2)
+        | (readPin(KBD_COL3) ? 0 : 1 << 3);
 
     // deselect the row
-    gpio_set_pin_output(pin);
-    gpio_write_pin_high(pin);
+    setPinOutput(pin);
+    writePinHigh(pin);
 
     return ret;
 }
@@ -103,7 +103,7 @@ static matrix_row_t getBits(uint16_t value, size_t bit0, size_t bit1, size_t bit
 static void readSnesController(matrix_row_t current_matrix[]) {
     uint16_t controller = 0;
 
-    gpio_write_pin_high(SNES_LATCH);
+    writePinHigh(SNES_LATCH);
 
     for (size_t bit = 0; bit < SNES_DATA_BITS; ++bit) {
         // Wait for shift register to setup the data line
@@ -111,16 +111,16 @@ static void readSnesController(matrix_row_t current_matrix[]) {
 
         // Shift accumulated data and read data pin
         controller <<= 1;
-        controller |= gpio_read_pin(SNES_D0) ? 0 : 1;
+        controller |= readPin(SNES_D0) ? 0 : 1;
         // todo: maybe read D1 and IO here too
 
         // Shift next bit in
-        gpio_write_pin_high(SNES_CLOCK);
+        writePinHigh(SNES_CLOCK);
         wait_us(SNES_CLOCK_PULSE_DURATION);
-        gpio_write_pin_low(SNES_CLOCK);
+        writePinLow(SNES_CLOCK);
     }
 
-    gpio_write_pin_low(SNES_LATCH);
+    writePinLow(SNES_LATCH);
 
     controller >>= 4;
 

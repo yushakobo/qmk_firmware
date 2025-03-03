@@ -78,7 +78,7 @@ typedef union {
     struct PACKED {
         uint8_t     enable : 2;
         uint8_t     mode : 6;
-        hsv_t       hsv;
+        HSV         hsv;
         uint8_t     speed;
         led_flags_t flags;
     };

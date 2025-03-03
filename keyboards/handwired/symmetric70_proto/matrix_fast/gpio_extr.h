@@ -1,7 +1,4 @@
 #pragma once
-
-#include <stdint.h>
-
 // clang-format off
 
 #if defined(__AVR__)

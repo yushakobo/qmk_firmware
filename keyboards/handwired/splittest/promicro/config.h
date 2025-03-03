@@ -16,5 +16,8 @@
 
 #pragma once
 
+
 // use I2C on AVR
 #define USE_I2C
+
+#define SPLIT_HAND_PIN F6

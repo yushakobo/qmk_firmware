@@ -149,12 +149,12 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
 
 
 void suspend_power_down_kb(void) {
-    gpio_write_pin_low(IS31FL3743A_SDB_PIN);
+    writePinLow(IS31FL3743A_SDB_PIN);
     suspend_power_down_user();
 }
 
 void suspend_wakeup_init_kb(void) {
-    gpio_write_pin_high(IS31FL3743A_SDB_PIN);
+    writePinHigh(IS31FL3743A_SDB_PIN);
     suspend_wakeup_init_user();
 }
 #endif
@@ -165,7 +165,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     }
     switch (keycode) {
 #    ifdef RGB_MATRIX_ENABLE
-        case QK_RGB_MATRIX_TOGGLE:
+        case RGB_TOG:
             if (record->event.pressed) {
                 switch (rgb_matrix_get_flags()) {
                     case LED_FLAG_ALL: {

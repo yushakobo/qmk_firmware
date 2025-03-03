@@ -19,29 +19,29 @@
 #ifndef LAYER_LED_DISABLE
 
 void keyboard_pre_init_kb(void) {
-    gpio_set_pin_output(LED_INDICATOR_TOP);
-    gpio_set_pin_output(LED_INDICATOR_MID);
-    gpio_set_pin_output(LED_INDICATOR_BOT);
+    setPinOutput(LED_INDICATOR_TOP);
+    setPinOutput(LED_INDICATOR_MID);
+    setPinOutput(LED_INDICATOR_BOT);
     keyboard_pre_init_user();
 }
 
 __attribute__((weak)) layer_state_t layer_state_set_user(layer_state_t state) {
-    gpio_write_pin_high(LED_INDICATOR_TOP);
-    gpio_write_pin_high(LED_INDICATOR_MID);
-    gpio_write_pin_high(LED_INDICATOR_BOT);
+    writePinHigh(LED_INDICATOR_TOP);
+    writePinHigh(LED_INDICATOR_MID);
+    writePinHigh(LED_INDICATOR_BOT);
 
     switch(get_highest_layer(state) % 4) {
     case 1:
-        gpio_write_pin_low(LED_INDICATOR_TOP);
-        gpio_write_pin_low(LED_INDICATOR_MID);
+        writePinLow(LED_INDICATOR_TOP);
+        writePinLow(LED_INDICATOR_MID);
         break;
     case 2:
-        gpio_write_pin_low(LED_INDICATOR_TOP);
-        gpio_write_pin_low(LED_INDICATOR_BOT);
+        writePinLow(LED_INDICATOR_TOP);
+        writePinLow(LED_INDICATOR_BOT);
         break;
     case 3:
-        gpio_write_pin_low(LED_INDICATOR_MID);
-        gpio_write_pin_low(LED_INDICATOR_BOT);
+        writePinLow(LED_INDICATOR_MID);
+        writePinLow(LED_INDICATOR_BOT);
         break;
     }
     return state;

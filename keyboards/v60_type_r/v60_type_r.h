@@ -19,6 +19,8 @@
 
 #ifdef RGBLIGHT_ENABLE
 
+#include "rgblight.h"
+
 void rgb_init(void);
 void set_rgb_color(uint8_t pin, uint8_t value, uint8_t timer_value);
 

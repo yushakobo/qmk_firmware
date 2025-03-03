@@ -18,7 +18,6 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "pointing_device.h"
 
 #ifndef ANALOG_JOYSTICK_X_AXIS_PIN
 #    error No pin specified for X Axis
@@ -43,8 +42,6 @@
 #    define ANALOG_JOYSTICK_SPEED_MAX 2
 #endif
 
-const pointing_device_driver_t analog_joystick_pointing_device_driver;
-
 typedef struct {
     int8_t x;
     int8_t y;
@@ -52,4 +49,3 @@ typedef struct {
 } report_analog_joystick_t;
 report_analog_joystick_t analog_joystick_read(void);
 void                     analog_joystick_init(void);
-report_mouse_t           analog_joystick_get_report(report_mouse_t mouse_report);

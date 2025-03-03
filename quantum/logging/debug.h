@@ -17,7 +17,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <stdio.h>
+#ifndef PROTOCOL_ARM_ATSAM
+#    include <stdio.h>
+#endif
+
 #include <stdbool.h>
 #include "print.h"
 

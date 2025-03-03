@@ -15,8 +15,7 @@
  */
 #pragma once
 
-#include <stdint.h>
-#include "gpio.h"
+#include "quantum.h"
 
 #define LED_ON          2
 #define LED_DIM         1

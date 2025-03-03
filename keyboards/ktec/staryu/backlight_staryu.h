@@ -20,9 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 static inline void backlight_set_value(uint8_t index, uint8_t level) {
   static const uint8_t backlight_pins[] = BACKLIGHT_PINS;
   if (level) {
-      gpio_set_pin_output(backlight_pins[index]);
+      setPinOutput(backlight_pins[index]);
   } else {
-      gpio_set_pin_input(backlight_pins[index]);
+      setPinInput(backlight_pins[index]);
   }
 }
 

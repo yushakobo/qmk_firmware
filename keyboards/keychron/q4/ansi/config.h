@@ -16,5 +16,5 @@
 
 #pragma once
 
-/* Enable CapsLock LED*/
+/* Enable CapsLcok LED*/
 #define CAPS_LOCK_LED_INDEX 28

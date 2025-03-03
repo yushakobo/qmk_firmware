@@ -17,6 +17,7 @@
 #pragma once
 
 #define MASTER_RIGHT
+//#define MASTER_LEFT
 
 #define PERMISSIVE_HOLD
 

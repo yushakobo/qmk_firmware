@@ -16,7 +16,8 @@
 
 #pragma once
 
-#include <stdint.h>
+#include "quantum.h"
+#include "rgb_matrix.h"
 
 extern const uint8_t led_map[RGB_MATRIX_LED_COUNT];
 

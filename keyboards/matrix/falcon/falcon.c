@@ -18,12 +18,11 @@
 void matrix_init_kb(void)
 {
     // enable charge
-    gpio_set_pin_output(CHG_EN_PIN);
-    gpio_write_pin_high(CHG_EN_PIN);
+    setPinOutput(CHG_EN_PIN);
+    writePinHigh(CHG_EN_PIN);
 
     // enable led power
-    gpio_set_pin_output(LED_POWER_PIN);
-    gpio_write_pin_high(LED_POWER_PIN);
+    setPinOutput(LED_POWER_PIN);
+    writePinHigh(LED_POWER_PIN);
 
-    matrix_init_user();
 }

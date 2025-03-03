@@ -16,7 +16,7 @@ Make example for this keyboard (after setting up your build environment):
 
     make spiderisland/split78:default
 
-Flashing example for this keyboard:
+Flashing example for this keyboard ([after setting up the bootloadHID flashing environment](https://docs.qmk.fm/#/flashing_bootloadhid))
 
     make spiderisland/split78:default:flash
 

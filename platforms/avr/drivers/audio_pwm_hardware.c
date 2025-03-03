@@ -213,7 +213,7 @@ void channel_2_stop(void) {
 }
 #endif
 
-void audio_driver_initialize_impl(void) {
+void audio_driver_initialize(void) {
 #ifdef AUDIO1_PIN_SET
     channel_1_stop();
     gpio_set_pin_output(AUDIO1_PIN);
@@ -254,7 +254,7 @@ void audio_driver_initialize_impl(void) {
 #endif
 }
 
-void audio_driver_stop_impl(void) {
+void audio_driver_stop(void) {
 #ifdef AUDIO1_PIN_SET
     channel_1_stop();
 #endif
@@ -264,7 +264,7 @@ void audio_driver_stop_impl(void) {
 #endif
 }
 
-void audio_driver_start_impl(void) {
+void audio_driver_start(void) {
 #ifdef AUDIO1_PIN_SET
     channel_1_start();
     if (playing_note) {

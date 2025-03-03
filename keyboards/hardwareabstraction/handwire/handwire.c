@@ -28,7 +28,7 @@ enum custom_keycodes{
 
 // Documentation: custom_quantum_functions.md
 void keyboard_post_init_kb(void){
-    gpio_set_pin_output(BUZZER_PIN);
+    setPinOutput(BUZZER_PIN);
     keyboard_post_init_user();
 }
 
@@ -36,9 +36,10 @@ void housekeeping_task_kb(void){
     if(buzzer_on){
         if(buzzer_active && timer_elapsed(buzzer_timer) > buzzer_dwell){
         buzzer_active = false;
-        gpio_write_pin_low(BUZZER_PIN);
+        writePinLow(BUZZER_PIN);
         }
     }
+    housekeeping_task_user();
 }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
@@ -49,7 +50,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
             if(!buzzer_active){
                 buzzer_active = true;
                 buzzer_timer = timer_read();
-                gpio_write_pin_high(BUZZER_PIN);
+                writePinHigh(BUZZER_PIN);
             }
         }
 
@@ -93,10 +94,10 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 if(buzzer_on == true){
                     buzzer_active = true;
                     buzzer_timer = timer_read();
-                    gpio_write_pin_high(BUZZER_PIN);
+                    writePinHigh(BUZZER_PIN);
                 }
                 else{
-                    gpio_write_pin_low(BUZZER_PIN);
+                    writePinLow(BUZZER_PIN);
                 }
                 break;
 

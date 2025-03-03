@@ -4,9 +4,6 @@
 #include "satisfaction_core.h"
 #include "print.h"
 #include "debug.h"
-#include "matrix.h"
-#include "quantum.h"
-#include "encoder.h"
 
 #include <ch.h>
 #include <hal.h>

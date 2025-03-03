@@ -16,9 +16,7 @@
 
 #pragma once
 
-#include <stdint.h>
-#include <stdbool.h>
-#include "color.h"
+#include "quantum.h"
 
 enum layer_names {
     _CONTROL,
@@ -27,7 +25,7 @@ enum layer_names {
     _FN
 };
 
-#define _HSV(H, S, V) (hsv_t){ .h = H, .s = S, .v = V }
+#define _HSV(H, S, V) (HSV){ .h = H, .s = S, .v = V }
 #define _RGB(rgb) rgb.r, rgb.g, rgb.b
 
 bool input_mode(void);

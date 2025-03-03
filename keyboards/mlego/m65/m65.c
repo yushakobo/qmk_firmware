@@ -167,7 +167,8 @@ bool oled_task_kb(void) {
 
 #endif
 
-void housekeeping_task_kb(void) {
+void matrix_scan_kb(void) {
+    matrix_scan_user();
     toggle_leds(toggle_lwr, toggle_rse);
 }
 

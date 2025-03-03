@@ -139,12 +139,12 @@ void matrix_init_kb(void) {
     }
 
     system76_ec_rgb_layer(layer_state);
-
-    matrix_init_user();
 }
 
-void housekeeping_task_kb(void) {
+void matrix_scan_kb(void) {
     usb_mux_event();
+
+    matrix_scan_user();
 }
 
 #define LEVEL(value) (uint8_t)(((uint16_t)value) * ((uint16_t)RGB_MATRIX_MAXIMUM_BRIGHTNESS) / ((uint16_t)255))
@@ -191,7 +191,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 #else
             return true;
 #endif
-        case QK_RGB_MATRIX_VALUE_DOWN:
+        case RGB_VAD:
             if (record->event.pressed) {
                 uint8_t level = rgb_matrix_config.hsv.v;
                 for (int i = sizeof(levels) - 1; i >= 0; i--) {
@@ -203,7 +203,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 set_value_all_layers(level);
             }
             return false;
-        case QK_RGB_MATRIX_VALUE_UP:
+        case RGB_VAI:
             if (record->event.pressed) {
                 uint8_t level = rgb_matrix_config.hsv.v;
                 for (int i = 0; i < sizeof(levels); i++) {
@@ -215,7 +215,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 set_value_all_layers(level);
             }
             return false;
-        case QK_RGB_MATRIX_TOGGLE:
+        case RGB_TOG:
             if (record->event.pressed) {
                 uint8_t level = 0;
                 if (rgb_matrix_config.hsv.v == 0) {
@@ -238,11 +238,9 @@ layer_state_t layer_state_set_kb(layer_state_t layer_state) {
 }
 
 #ifdef CONSOLE_ENABLE
-void keyboard_post_init_kb(void) {
+void keyboard_post_init_user(void) {
     debug_enable   = true;
     debug_matrix   = false;
     debug_keyboard = false;
-
-    keyboard_post_init_user();
 }
 #endif  // CONSOLE_ENABLE

@@ -2,14 +2,6 @@
     "keyboard_name": "Kin80",
     "url": "https://github.com/DmNosachev/kinesis80",
     "maintainer": "DmNosachev",
-    "features": {
-        "bootmagic": true,
-        "command": false,
-        "console": false,
-        "extrakey": true,
-        "mousekey": true,
-        "nkro": false
-    },
     "usb": {
         "vid": "0xFEED",
         "pid": "0x4B4E"

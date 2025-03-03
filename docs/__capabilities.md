@@ -6,6 +6,8 @@ This page lays out the capabilities used by the QMK Firmware documentation, in o
 
 Unrelated to styling, high-level tech.
 
+* I18n -- translations to other languages: [_langs.md](_langs.md)
+* Sidebar -- listing of pages by category: [_summary.md](_summary.md)
 * Title anchors -- `:id=some-anchor-name`, used for direct linking to sections
     * Links to anchors:
         * Style 1: [early initialization](platformdev_chibios_earlyinit.md?id=board-init)
@@ -38,10 +40,7 @@ Unrelated to styling, high-level tech.
 
 ![QMK Color Wheel with HSV Values](https://i.imgur.com/vkYVo66.jpg)
 
-![QMK Light](./public/badge-community-light.svg)
-![QMK Dark](./public/badge-community-dark.svg)
-
-<img src="./public/color-wheel.svg" alt="HSV Color Wheel" width="250"/>
+<img src="gitbook/images/color-wheel.svg" alt="HSV Color Wheel" width="250"/>
 
 ### Lists
 
@@ -84,7 +83,7 @@ Nested mixed:
   * `lib/python/qmk/cli/generate/config_h.py`
   * `lib/python/qmk/cli/generate/rules_mk.py`
 
-### Emoji {#emoji}
+### Emoji :id=emoji
 
 #### Direct:
 
@@ -126,26 +125,6 @@ Command+<code>&#96;</code>
 ?> Query, this?
 
 !> Notification, damnit!
-
-::: info
-This is an info box.
-:::
-
-::: tip
-This is a tip.
-:::
-
-::: warning
-This is a warning.
-:::
-
-::: danger
-This is a dangerous warning.
-:::
-
-::: details
-This is a details block.
-:::
 
 ### Keyboard keys
 
@@ -263,20 +242,6 @@ Content three
 
 <!-- tabs:end -->
 
-::::tabs
-=== tab a
-a content 2
-=== tab b
-b content 2
-=== tab c
-:::tabs
-== nested tab a
-nested a content 2
-== nested tab b
-nested b content 2
-:::
-::::
-
 ## Details sections
 
 Expandable:
@@ -289,10 +254,8 @@ Expandable:
 This is some inner content.
 </details>
 
+  [1]: https://en.wikipedia.org/wiki/Eclipse_(software)
+
 ## Embed
 
 [example embed](__capabilities_inc.md ':include')
-
-<!--@include: ./__capabilities_inc.md-->
-
-  [1]: https://en.wikipedia.org/wiki/Eclipse_(software)

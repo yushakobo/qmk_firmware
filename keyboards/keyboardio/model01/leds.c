@@ -13,8 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-#include "leds.h"
+#include "quantum.h"
 #include "i2c_master.h"
 #include "led_tables.h"
 #include "rgb_matrix.h"
@@ -65,11 +64,12 @@ static void set_color_all(uint8_t r, uint8_t g, uint8_t b) {
 
 static void init(void) {
   // Enable high current pathway to LEDs - this does violate the USB spec though! (1.6 amps...)
-  gpio_set_pin_output(E6);
-  gpio_write_pin_low(E6);
+  DDRE |= _BV(6);
+  PORTE &= ~_BV(6);
 
   // Overcurrent check input
-  gpio_set_pin_input(B4);
+  DDRB &= ~_BV(4);
+  PORTB &= ~_BV(4);
 }
 
 static void flush(void) {

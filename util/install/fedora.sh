@@ -4,8 +4,7 @@ _qmk_install() {
     echo "Installing dependencies"
 
     . /etc/os-release
-    if [ "$VERSION_ID" -ge "39" ]; then
-        sudo dnf copr -h >/dev/null 2>&1 || sudo dnf $SKIP_PROMPT install dnf-plugins-core
+    if [ "$VERSION_ID" == "39" ]; then
         sudo dnf $SKIP_PROMPT copr enable erovia/dfu-programmer
     fi
 

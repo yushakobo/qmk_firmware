@@ -18,6 +18,7 @@
 
 #define BASE 0
 #define FN 1
+#define RGB RGB_MOD
 #define XXX KC_NO
 #define KC_TR KC_TRANSPARENT
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -30,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `----------------------------------------'
    */
   	[BASE] = LAYOUT(
-    KC_DEL,  KC_UP,   KC_ENT,           UG_NEXT,
+    KC_DEL,  KC_UP,   KC_ENT,           RGB,
     KC_LEFT, KC_DOWN, KC_RIGHT,         MO(1)
   ),
 
@@ -42,8 +43,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `----------------------------------------'
    */
   	[FN] = LAYOUT(
-    UG_HUEU, UG_VALU, UG_SATU,         KC_TR,
-    UG_HUED, UG_VALD, UG_SATD,         KC_TR
+    RGB_HUI, RGB_VAI, RGB_SAI,         KC_TR,
+    RGB_HUD, RGB_VAD, RGB_SAD,         KC_TR
   )
 };
 

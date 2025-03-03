@@ -16,7 +16,6 @@
 
 #pragma once
 
-#include <stdint.h>
 #include "gpio.h"
 
 #ifndef GPIOH_BASE

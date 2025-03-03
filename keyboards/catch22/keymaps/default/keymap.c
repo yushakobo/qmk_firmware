@@ -12,7 +12,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            KC_SPC,  KC_P0,    KC_PDOT,  KC_TAB
 ),
 [_FN] = LAYOUT(
-           UG_TOGG, UG_NEXT, UG_HUEU, UG_HUEU,
+           RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUI,
            _______, _______, _______, _______,
   _______, _______, _______, _______, _______,
   KC_2,    _______, _______, _______, _______,

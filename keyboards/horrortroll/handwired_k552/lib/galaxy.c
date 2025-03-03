@@ -14,9 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "galaxy.h"
-#include "oled_driver.h"
-#include "progmem.h"
+#include "quantum.h"
 
 # define ANIM_SIZE 636  // number of bytes in array, minimize for adequate firmware size, max is 1024
 

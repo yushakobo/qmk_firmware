@@ -17,11 +17,14 @@
 
 void matrix_init_kb(void) {
     // Set our LED pins as output
-    gpio_set_pin_output(D6);
+    setPinOutput(D6);
+    setPinOutput(B4);
+    setPinOutput(B5);
+    setPinOutput(B6);
 
     // Set our Tilt Sensor pins as input
-    gpio_set_pin_input_high(SHAKE_PIN_A);
-    gpio_set_pin_input_high(SHAKE_PIN_B);
+    setPinInputHigh(SHAKE_PIN_A);
+    setPinInputHigh(SHAKE_PIN_B);
 
     // Run the keymap level init
     matrix_init_user();
@@ -40,12 +43,12 @@ void check_encoder_buttons(void) {
 	if (drawing_mode) {
             dprintf("Turning drawing mode off.\n");
             drawing_mode = false;
-            gpio_write_pin_low(D6);
+            writePinLow(D6);
 	    unregister_code(KC_BTN1);
 	} else {
             dprintf("Turning drawing mode on.\n");
             drawing_mode = true;
-            gpio_write_pin_high(D6);
+            writePinHigh(D6);
 	    register_code(KC_BTN1);
 	}
     }
@@ -58,11 +61,11 @@ uint8_t detected_shakes = 0;
 static uint16_t shake_timer;
 #endif
 
-void housekeeping_task_kb(void) {
+void matrix_scan_kb(void) {
 #ifdef SHAKE_ENABLE
     // Read the current state of the tilt sensor. It is physically
     // impossible for both pins to register a low state at the same time.
-    uint8_t tilt_read = (gpio_read_pin(SHAKE_PIN_A) << 4) | gpio_read_pin(SHAKE_PIN_B);
+    uint8_t tilt_read = (readPin(SHAKE_PIN_A) << 4) | readPin(SHAKE_PIN_B);
 
     // Check to see if the tilt sensor has changed state since our last read
     if (tilt_state != tilt_read) {
@@ -81,6 +84,8 @@ void housekeeping_task_kb(void) {
         detected_shakes = 0;
     }
 #endif
+
+    matrix_scan_user();
 }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
@@ -128,8 +133,22 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     return process_record_user(keycode, record);
 }
 
+bool led_update_kb(led_t led_state) {
+    bool res = led_update_user(led_state);
+    if(res) {
+        writePin(B4, !led_state.num_lock);
+        writePin(B5, !led_state.caps_lock);
+        writePin(B6, !led_state.scroll_lock);
+    }
+
+    return res;
+}
+
+__attribute__((weak)) bool encoder_update_keymap(uint8_t index, bool clockwise) { return true; }
+__attribute__((weak)) bool encoder_update_user(uint8_t index, bool clockwise) { return encoder_update_keymap(index, clockwise); }
+
 bool encoder_update_kb(uint8_t index, bool clockwise) {
-    if (encoder_update_user(index, clockwise)) {
+    if (!encoder_update_user(index, clockwise)) {
         // Encoder 1, outside left
         if (index == 0 && clockwise) {
             tap_code(KC_MS_U);  // turned right

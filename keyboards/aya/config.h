@@ -16,4 +16,5 @@
 
 #pragma once
 
+#define SPLIT_HAND_PIN B5
 #define USE_I2C

@@ -8,3 +8,4 @@
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 200U // In ms in which the double tap can occur
 
 #define EE_HANDS
+#define SERIAL_USART_TX_PIN GP11

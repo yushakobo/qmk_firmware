@@ -12,7 +12,7 @@ Make example for this keyboard (after setting up your build environment):
 
     make mt/mt40:default
 
-Flashing example for this keyboard:
+Flashing example for this keyboard ([after setting up the bootloadHID flashing environment](https://docs.qmk.fm/#/flashing_bootloadhid))
 
     make mt/mt40:default:flash
 

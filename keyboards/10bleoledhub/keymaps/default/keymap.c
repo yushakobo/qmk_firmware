@@ -27,11 +27,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
    * .-------.
    * |NUMLOCK|
    * |-----------------------.
-   * |UG_TOGG|UG_NEXT|RGB_M_K|
+   * |RGB_TOG|RGB_MOD|RGB_M_K|
    * |-------|-------|-------|
-   * |UG_SATU|UG_SATD|UG_HUEU|
+   * |RGB_SAI|RGB_SAD|RGB_HUI|
    * |-------|-------|-------|
-   * |UG_VALU|UG_VALD|UG_SPDU|
+   * |RGB_VAI|RGB_VAD|RGB_SPI|
    * .-----------------------.
 */
 
@@ -44,9 +44,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_P1,   KC_P2,    KC_P3),
     [1] = LAYOUT(
         KC_NUM,
-		UG_TOGG, UG_NEXT, RGB_M_K,
-        UG_SATU, UG_SATD, UG_HUEU,
-        UG_VALU, UG_VALD, UG_SPDU),
+		RGB_TOG, RGB_MOD, RGB_M_K,
+        RGB_SAI, RGB_SAD, RGB_HUI,
+        RGB_VAI, RGB_VAD, RGB_SPI),
 };
 
 static void render_logo(void) {

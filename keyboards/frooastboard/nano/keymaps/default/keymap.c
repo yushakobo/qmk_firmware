@@ -26,19 +26,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_TRNS, TO(2)),
 
 	[2] = LAYOUT(
-		UG_TOGG, UG_NEXT,
+		RGB_TOG, RGB_MOD,
 		TO(3), TO(0)),
 
 	[3] = LAYOUT(
-		UG_HUED, UG_HUEU,
+		RGB_HUD, RGB_HUI,
 		TO(4), TO(2)),
 
 	[4] = LAYOUT(
-		UG_SATD, UG_SATU,
+		RGB_SAD, RGB_SAI,
 		TO(5), TO(3)),
 
 	[5] = LAYOUT(
-		UG_VALD, UG_VALU,
+		RGB_VAD, RGB_VAI,
 		TO(6), TO(4)),
 
 	[6] = LAYOUT(

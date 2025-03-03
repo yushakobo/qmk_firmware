@@ -36,7 +36,6 @@ GENERIC_FEATURES = \
     HAPTIC \
     KEY_LOCK \
     KEY_OVERRIDE \
-    LAYER_LOCK \
     LEADER \
     MAGIC \
     MOUSEKEY \

@@ -15,8 +15,7 @@
  */
 
 #include "matrix.h"
-#include "atomic_util.h"
-#include <string.h>
+#include "quantum.h"
 
 // Pin connected to DS of 74HC595
 #define DATA_PIN A7
@@ -34,29 +33,29 @@ static pin_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
 
 #define ROWS_PER_HAND (MATRIX_ROWS)
 
-static inline void gpio_atomic_set_pin_output_low(pin_t pin) {
+static inline void setPinOutput_writeLow(pin_t pin) {
     ATOMIC_BLOCK_FORCEON {
-        gpio_set_pin_output(pin);
-        gpio_write_pin_low(pin);
+        setPinOutput(pin);
+        writePinLow(pin);
     }
 }
 
-static inline void gpio_atomic_set_pin_output_high(pin_t pin) {
+static inline void setPinOutput_writeHigh(pin_t pin) {
     ATOMIC_BLOCK_FORCEON {
-        gpio_set_pin_output(pin);
-        gpio_write_pin_high(pin);
+        setPinOutput(pin);
+        writePinHigh(pin);
     }
 }
 
-static inline void gpio_atomic_set_pin_input_high(pin_t pin) {
+static inline void setPinInputHigh_atomic(pin_t pin) {
     ATOMIC_BLOCK_FORCEON {
-        gpio_set_pin_input_high(pin);
+        setPinInputHigh(pin);
     }
 }
 
 static inline uint8_t readMatrixPin(pin_t pin) {
     if (pin != NO_PIN) {
-        return gpio_read_pin(pin);
+        return readPin(pin);
     } else {
         return 1;
     }
@@ -65,37 +64,37 @@ static inline uint8_t readMatrixPin(pin_t pin) {
 static void shiftOut(uint8_t dataOut) {
     for (uint8_t i = 0; i < 8; i++) {
         if (dataOut & 0x1) {
-            gpio_atomic_set_pin_output_high(DATA_PIN);
+            setPinOutput_writeHigh(DATA_PIN);
         } else {
-            gpio_atomic_set_pin_output_low(DATA_PIN);
+            setPinOutput_writeLow(DATA_PIN);
         }
         dataOut = dataOut >> 1;
-        gpio_atomic_set_pin_output_high(CLOCK_PIN);
-        gpio_atomic_set_pin_output_low(CLOCK_PIN);
+        setPinOutput_writeHigh(CLOCK_PIN);
+        setPinOutput_writeLow(CLOCK_PIN);
     }
-    gpio_atomic_set_pin_output_high(LATCH_PIN);
-    gpio_atomic_set_pin_output_low(LATCH_PIN);
+    setPinOutput_writeHigh(LATCH_PIN);
+    setPinOutput_writeLow(LATCH_PIN);
 }
 
 static void shiftout_single(uint8_t data) {
     if (data & 0x1) {
-        gpio_atomic_set_pin_output_high(DATA_PIN);
+        setPinOutput_writeHigh(DATA_PIN);
     } else {
-        gpio_atomic_set_pin_output_low(DATA_PIN);
+        setPinOutput_writeLow(DATA_PIN);
     }
 
-    gpio_atomic_set_pin_output_high(CLOCK_PIN);
-    gpio_atomic_set_pin_output_low(CLOCK_PIN);
+    setPinOutput_writeHigh(CLOCK_PIN);
+    setPinOutput_writeLow(CLOCK_PIN);
 
-    gpio_atomic_set_pin_output_high(LATCH_PIN);
-    gpio_atomic_set_pin_output_low(LATCH_PIN);
+    setPinOutput_writeHigh(LATCH_PIN);
+    setPinOutput_writeLow(LATCH_PIN);
 }
 
 static bool select_col(uint8_t col) {
     pin_t pin = col_pins[col];
 
     if (pin != NO_PIN) {
-        gpio_atomic_set_pin_output_low(pin);
+        setPinOutput_writeLow(pin);
         return true;
     } else {
         if (col == 8) {
@@ -113,9 +112,9 @@ static void unselect_col(uint8_t col) {
 
     if (pin != NO_PIN) {
 #ifdef MATRIX_UNSELECT_DRIVE_HIGH
-        gpio_atomic_set_pin_output_high(pin);
+        setPinOutput_writeHigh(pin);
 #else
-        gpio_atomic_set_pin_input_high(pin);
+        setPinInputHigh_atomic(pin);
 #endif
     } else {
         if (col == (MATRIX_COLS - 1))
@@ -130,9 +129,9 @@ static void unselect_cols(void) {
 
         if (pin != NO_PIN) {
 #ifdef MATRIX_UNSELECT_DRIVE_HIGH
-            gpio_atomic_set_pin_output_high(pin);
+            setPinOutput_writeHigh(pin);
 #else
-            gpio_atomic_set_pin_input_high(pin);
+            setPinInputHigh_atomic(pin);
 #endif
         }
         if (x == (MATRIX_COLS - 1))
@@ -145,7 +144,7 @@ static void matrix_init_pins(void) {
     unselect_cols();
     for (uint8_t x = 0; x < MATRIX_ROWS; x++) {
         if (row_pins[x] != NO_PIN) {
-            gpio_atomic_set_pin_input_high(row_pins[x]);
+            setPinInputHigh_atomic(row_pins[x]);
         }
     }
 }

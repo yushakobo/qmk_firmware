@@ -51,11 +51,11 @@ LT(_ADJUST, KC_BSPC),          KC_UP,TG(_BROWSER),
 
   [_ADJUST] = LAYOUT( /* Base */
   //|-------------------------------------------|
-                             UG_VALD,
+                             RGB_VAD,
   //|---------------+---------------+-----------|
-         MO(_ADJUST),        UG_SATD,    UG_VALU,
+         MO(_ADJUST),        RGB_SAD,    RGB_VAI,
   //|---------------+---------------+-----------|
-             UG_NEXT,        UG_TOGG,    UG_SATU
+             RGB_MOD,        RGB_TOG,    RGB_SAI
   //|-------------------------------------------|
   )
 };

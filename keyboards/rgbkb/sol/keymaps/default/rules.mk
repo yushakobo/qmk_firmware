@@ -5,3 +5,7 @@
 # EXTRAKEY_ENABLE         = no       # Audio control and System control
 #
 # To keep things clean and tidy, as well as make upgrades easier, only place overrides from the defaults in this file.
+
+
+# Do not edit past here
+include keyboards/$(KEYBOARD)/post_rules.mk

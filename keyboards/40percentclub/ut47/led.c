@@ -25,14 +25,16 @@ bool led_update_kb(led_t led_state)
     if (res) {
         if (led_state.caps_lock) {
             // output low
-            gpio_set_pin_output(B0);
-            gpio_write_pin_low(B0);
-            gpio_set_pin_output(D5);
-            gpio_write_pin_low(D5);
+            DDRB |= (1<<0);
+            PORTB &= ~(1<<0);
+            DDRD |= (1<<5);
+            PORTD &= ~(1<<5);
         } else {
             // Hi-Z
-            gpio_set_pin_input(B0);
-            gpio_set_pin_input(D5);
+            DDRB &= ~(1<<0);
+            PORTB &= ~(1<<0);
+            DDRD &= ~(1<<5);
+            PORTD &= ~(1<<5);
         }
     }
     return false;

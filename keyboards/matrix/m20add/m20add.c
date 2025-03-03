@@ -27,10 +27,18 @@ uint8_t read_pin(uint16_t pin)
     return (data & (1<<GET_PIN(pin))) ? 1 : 0;
 }
 
-void housekeeping_task_kb(void) {
+void matrix_init_kb(void) {
+#ifdef RGBLIGHT_ENABLE
+    rgb_ring_init();
+#endif
+    matrix_init_user();
+}
+
+void matrix_scan_kb(void) {
 #ifdef RGBLIGHT_ENABLE
     rgb_ring_task();
 #endif
+    matrix_scan_user();
 }
 
 static uint16_t caps_lock_pin = DEF_PIN(TCA6424_PORT2, 3);

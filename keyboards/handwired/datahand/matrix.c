@@ -99,27 +99,27 @@ static void select_row(uint8_t row) {
    */
 
   if (row & (1<<0)) {
-    gpio_write_pin_high(E6);
+    PORTE |= (1<<6);
   } else {
-    gpio_write_pin_low(E6);
+    PORTE &= ~(1<<6);
   }
 
   if (row & (1<<1)) {
-    gpio_write_pin_high(B7);
+    PORTB |= (1<<7);
   } else {
-    gpio_write_pin_low(B7);
+    PORTB &= ~(1<<7);
   }
 
   if (row & (1<<2)) {
-    gpio_write_pin_high(D0);
+    PORTD |= (1<<0);
   } else {
-    gpio_write_pin_low(D0);
+    PORTD &= ~(1<<0);
   }
 
   if (row & (1<<3)) {
-    gpio_write_pin_high(D1);
+    PORTD |= (1<<1);
   } else {
-    gpio_write_pin_low(D1);
+    PORTD &= ~(1<<1);
   }
 }
 
