@@ -52,6 +52,12 @@
         {
             "fileMatch": ["keymap.json"],
             "url": "./data/schemas/keymap.jsonschema"
+        },
+        {
+            "fileMatch": [
+                "keyboard.json"
+            ],
+            "url": "https://raw.githubusercontent.com/qmk/qmk_firmware/master/data/schemas/keyboard.jsonschema"
         }
     ]
 }
