@@ -1,6 +1,6 @@
 # yk60
 
-![yk60](https://imgur.com/a/2p9zVHk)
+![yk60](https://i.imgur.com/nyfJ7na.png)
 
 *yk60 is a simple 60% keyboard designed by yushakobo.*
 
