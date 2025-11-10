@@ -1,5 +1,5 @@
 {
-    "manufacturer": "Ratata",
+    "manufacturer": "Yushakobo",
     "keyboard_name": "On Any Banana Day",
     "maintainer": "Ratata",
     "bootloader": "rp2040",
@@ -17,7 +17,7 @@
         "rows": ["GP26", "GP25", "GP24", "GP23"]
     },
     "processor": "RP2040",
-    "url": "",
+    "url": "https://shop.yushakobo.jp/products/11142",
     "usb": {
         "device_version": "1.0.0",
         "pid": "0x001C",
