@@ -1,0 +1,54 @@
+{
+    "manufacturer": "yushakobo",
+    "keyboard_name": "nekopad",
+    "maintainer": "yushakobo",
+    "bootloader": "rp2040",
+    "diode_direction": "COL2ROW",
+    "features": {
+        "rgblight": true,
+        "bootmagic": true,
+        "extrakey": true,
+        "mousekey": true,
+        "encoder": true,
+        "nkro": true
+    },
+    "matrix_pins": {
+        "cols": ["GP13", "GP12"],
+        "rows": ["GP10", "GP9"]
+    },
+    "processor": "RP2040",
+    "url": "https://shop.yushakobo.jp/",
+    "usb": {
+        "device_version": "1.0.0",
+        "vid": "0x3265",
+        "pid": "0x001F"
+    },
+    "layouts": {
+        "LAYOUT_2x2": {
+            "layout": [
+                {"matrix": [1, 1], "x": 0, "y": 0},
+                {"matrix": [1, 0], "x": 3, "y": 0},
+                {"matrix": [0, 1], "x": 1, "y": 1},
+                {"matrix": [0, 0], "x": 2, "y": 1}
+            ]
+        }
+    },
+    "encoder": {
+        "rotary": [
+            {"pin_a": "GP28", "pin_b": "GP29"},
+            {"pin_a": "GP2", "pin_b": "GP3"}
+        ]
+    },
+    "ws2812": {
+        "driver": "vendor",
+        "pin": "GP1"
+    },
+    "rgblight": {
+        "led_count": 4,
+        "max_brightness": 50,
+        "sleep": true,
+        "animations": {
+            "rainbow_swirl": true
+        }
+    }
+}
