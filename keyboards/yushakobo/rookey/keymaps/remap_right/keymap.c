@@ -5,13 +5,13 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        LCTL(KC_A),     LSFT(KC_HOME),  LSFT(KC_END),   LT(2, KC_BSPC),
+        LCTL(KC_A),     LSFT(KC_END),   LSFT(KC_HOME),  LT(2, KC_BSPC),
         LCTL(KC_X),     LCTL(KC_C),     LCTL(KC_V),     LCS(KC_V),
                                                                         LT(1, KC_ENT)
     ),
     [1] = LAYOUT(
         KC_F11,         LCTL(KC_T),     LCTL(KC_F),     LSG(KC_S),
-        LGUI(KC_LEFT),  LGUI(KC_RGHT),  MS_WHLL,        MS_WHLR,
+        LGUI(KC_RGHT),  LGUI(KC_LEFT),  MS_WHLR,        MS_WHLL,
                                                                         KC_TRNS
     ),
     [2] = LAYOUT(
