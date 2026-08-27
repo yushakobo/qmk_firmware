@@ -24,7 +24,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,  KC_DEL, KC_BSPC,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,
         KC_LCTL,KC_LGUI,KC_LALT,  MO(1),  KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC, KC_RALT,  KC_APP, KC_LCTL
     ),
-        [1] = LAYOUT(
+    [1] = LAYOUT(
         QK_BOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
@@ -33,39 +33,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
-bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    // caps lock cyan
-    if (host_keyboard_led_state().caps_lock) {
-        RGB_MATRIX_INDICATOR_SET_COLOR(0, 0, 0, 128);
+bool led_update_user(led_t led_state) {
+    // Caps Lock indicator on LED index 0
+    if (led_state.caps_lock) {
+        rgblight_setrgb_at(0, 0, 128, 0);
     } else {
-        RGB_MATRIX_INDICATOR_SET_COLOR(0, 0, 0, 0);
+        rgblight_setrgb_at(0, 0, 0, 0);
     }
 
-    // num lock cyan
-    if (host_keyboard_led_state().num_lock) {
-        RGB_MATRIX_INDICATOR_SET_COLOR(1, 0, 0, 128);
+    // Num Lock indicator on LED index 1
+    if (led_state.num_lock) {
+        rgblight_setrgb_at(0, 0, 128, 1);
     } else {
-        RGB_MATRIX_INDICATOR_SET_COLOR(1, 0, 0, 0);
+        rgblight_setrgb_at(0, 0, 0, 1);
     }
 
-    // scroll lock cyan
-    if (host_keyboard_led_state().scroll_lock) {
-        RGB_MATRIX_INDICATOR_SET_COLOR(2, 0, 0, 128);
+    // Scroll Lock indicator on LED index 2
+    if (led_state.scroll_lock) {
+        rgblight_setrgb_at(0, 0, 128, 2);
     } else {
-        RGB_MATRIX_INDICATOR_SET_COLOR(2, 0, 0, 0);
+        rgblight_setrgb_at(0, 0, 0, 2);
     }
 
-    // layer state
-    switch (get_highest_layer(layer_state)) {
+    return true;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    // Reset layer indicator indices
+    rgblight_setrgb_at(0, 0, 0, 37);
+    rgblight_setrgb_at(0, 0, 0, 38);
+    rgblight_setrgb_at(0, 0, 0, 39);
+
+    switch (get_highest_layer(state)) {
         case 1:
-            RGB_MATRIX_INDICATOR_SET_COLOR(37, 0, 0, 128);
+            rgblight_setrgb_at(0, 0, 128, 37);
             break;
         case 2:
-            RGB_MATRIX_INDICATOR_SET_COLOR(38, 0, 0, 128);
+            rgblight_setrgb_at(0, 0, 128, 38);
             break;
         case 3:
-            RGB_MATRIX_INDICATOR_SET_COLOR(39, 0, 0, 128);
+            rgblight_setrgb_at(0, 0, 128, 39);
             break;
     }
-    return false;
+    return state;
 }
