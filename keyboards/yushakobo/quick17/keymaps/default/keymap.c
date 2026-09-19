@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
+#include "quick17_prefs.h"
 
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
@@ -21,22 +22,22 @@ enum custom_keycodes {
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-        [_CONTROL] = LAYOUT(
+    [_CONTROL] = LAYOUT(
         KC_TAB, KC_PGUP,KC_UP,  KC_PGDN,KC_HOME,KC_INS,
         KC_LCTL,KC_LEFT,KC_DOWN,KC_RGHT,KC_END, KC_DEL,
         KC_LSFT,KC_LGUI,KC_ESC, KC_LALT,LT(3,KC_SPC),TO(1)
     ),
-        [_EDIT1] = LAYOUT(
+    [_EDIT1] = LAYOUT(
         KC_ESC, KC_W,   KC_E,   KC_R,   KC_Y,   KC_BSPC,
         KC_LCTL,KC_A,   KC_D,   KC_F,   KC_H,   LCTL(KC_Z),
         KC_LSFT,KC_X,   KC_V,   KC_B,   LT(2,KC_SPC),LCTL(KC_S)
     ),
-        [_EDIT2] = LAYOUT(
+    [_EDIT2] = LAYOUT(
         KC_ESC, KC_Q,   MS_BTN3,KC_INS, KC_ENT, KC_DEL,
         KC_LCTL,KC_LBRC,KC_RBRC,KC_PGDN,KC_PGUP,LCTL(KC_Y),
         KC_LSFT,TO(3),  RM_TOGG,TO(0),  _______,KC_NO
     ),
-        [_FN] = LAYOUT(
+    [_FN] = LAYOUT(
         KC_ESC, KC_LANG,KC_NO,  RM_TOGG,KC_MNXT,KC_VOLU,
         KC_CAPS,KC_NUM, KC_NO,  RM_NEXT,KC_MPRV,KC_VOLD,
         CG_NORM,CG_LSWP,EE_CLR, QK_BOOT,TO(0),  KC_MUTE
@@ -110,4 +111,13 @@ bool encoder_update_user(uint8_t index, bool clockwise){
         rgblight_mode(RGBLIGHT_MODE_RAINBOW_SWIRL);
         set_input_mode(false);
     }
+#endif
+
+#ifdef ENCODER_MAP_ENABLE
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
+  [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+  [1] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+  [2] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+  [3] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) }
+};
 #endif
