@@ -52,7 +52,7 @@ const rgblight_segment_t* const PROGMEM numpad_a_rgb_layers[] = RGBLIGHT_LAYERS_
 );
 
 void keyboard_post_init_user(void) {
-    rgblight_sethsv(HSV_WHITE);
+    rgblight_sethsv(0,0,5);
     rgblight_layers = numpad_a_rgb_layers;
 }
 
