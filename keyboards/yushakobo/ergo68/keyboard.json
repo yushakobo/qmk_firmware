@@ -29,7 +29,15 @@
         "sleep": true,
         "split_count": [37, 37],
         "animations": {
-            "all": true
+            "breathing": true,
+            "rainbow_mood": true,
+            "snake": true,
+            "knight": true,
+            "christmas": true,
+            "gradient": true,
+            "rgb_test": true,
+            "alternate": true,
+            "twinkle": true
         },
         "driver": "ws2812",
         "layers": {
