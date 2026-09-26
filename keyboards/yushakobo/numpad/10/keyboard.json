@@ -1,6 +1,6 @@
 {
     "manufacturer": "yushakobo",
-    "keyboard_name": "yushakobo/numpad/10",
+    "keyboard_name": "Numpad 1.0",
     "maintainer": "yushakobo",
     "development_board": "promicro",
     "diode_direction": "COL2ROW",
@@ -9,6 +9,7 @@
         "extrakey": true,
         "mousekey": true,
         "nkro": true,
+        "encoder": true,
         "rgblight": true
     },
     "matrix_pins": {
@@ -20,6 +21,11 @@
         "device_version": "1.0.0",
         "pid": "0x0022",
         "vid": "0x3265"
+    },
+    "encoder": {
+        "rotary": [
+            {"pin_a": "B5", "pin_b": "B6"}
+        ]
     },
     "ws2812": {
         "pin": "D3"
