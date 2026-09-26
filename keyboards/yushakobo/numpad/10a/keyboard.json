@@ -16,7 +16,7 @@
         "rows": ["D0", "B4", "C7", "B7", "B5", "B6"]
     },
     "processor": "atmega32u2",
-    "url": "example.com",
+    "url": "https://yushakobo.jp",
     "usb": {
         "device_version": "1.0.0",
         "pid": "0x0021",
