@@ -27,6 +27,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef RGBLIGHT_LAYERS
 # define LOCK_COLOR_1 HSV_TEAL
+# define LOCK_COLOR_2 HSV_YELLOW
+# define LOCK_COLOR_3 HSV_GREEN
 
 const rgblight_segment_t PROGMEM numpad_a_default[] = RGBLIGHT_LAYER_SEGMENTS (
     {0,1,HSV_WHITE}
@@ -35,6 +37,12 @@ const rgblight_segment_t PROGMEM numpad_a_default[] = RGBLIGHT_LAYER_SEGMENTS (
 const rgblight_segment_t PROGMEM numpad_a_numlock[] = RGBLIGHT_LAYER_SEGMENTS (
     {0,1,LOCK_COLOR_1}
 );
+const rgblight_segment_t PROGMEM numpad_a_capslock[] = RGBLIGHT_LAYER_SEGMENTS (
+    {0,1,LOCK_COLOR_2}
+);
+const rgblight_segment_t PROGMEM numpad_a_numcaps[] = RGBLIGHT_LAYER_SEGMENTS (
+    {0,1,LOCK_COLOR_3}
+);
 
 layer_state_t default_layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(1, layer_state_cmp(state, 0));
@@ -42,13 +50,17 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
 }
 
 bool led_update_user(led_t led_state){
-    rgblight_set_layer_state(1, (host_keyboard_led_state().num_lock));
+    rgblight_set_layer_state(1, (host_keyboard_led_state().num_lock && !(host_keyboard_led_state().caps_lock)));
+    rgblight_set_layer_state(2, (host_keyboard_led_state().caps_lock && !(host_keyboard_led_state().num_lock)));
+    rgblight_set_layer_state(3, (host_keyboard_led_state().num_lock && host_keyboard_led_state().caps_lock));
     return true;
 }
 
 const rgblight_segment_t* const PROGMEM numpad_a_rgb_layers[] = RGBLIGHT_LAYERS_LIST (
   numpad_a_default,
-  numpad_a_numlock
+  numpad_a_numlock,
+  numpad_a_capslock,
+  numpad_a_numcaps
 );
 
 void keyboard_post_init_user(void) {
