@@ -1,0 +1,3 @@
+VIA_ENABLE = yes
+VIA_INSECURE = yes
+ENCODER_MAP_ENABLE = yes
