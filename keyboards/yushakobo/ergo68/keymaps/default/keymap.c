@@ -34,6 +34,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool led_update_user(led_t led_state) {
+    // slave 側では rgblight_setrgb_at() の同期フラッシュが split 通信を阻害するため、
+    // インジケータの描画は master に限定する (slave は RGBLIGHT_SPLIT で同期される)。
+    if (!is_keyboard_master()) {
+        return true;
+    }
+
     // Caps Lock indicator on LED index 0
     if (led_state.caps_lock) {
         rgblight_setrgb_at(0, 0, 128, 0);
@@ -59,6 +65,10 @@ bool led_update_user(led_t led_state) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
+    if (!is_keyboard_master()) {
+        return state;
+    }
+
     // Reset layer indicator indices
     rgblight_setrgb_at(0, 0, 0, 37);
     rgblight_setrgb_at(0, 0, 0, 38);
